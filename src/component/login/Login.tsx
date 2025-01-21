@@ -3,8 +3,9 @@ import { useForm } from 'react-hook-form';
 import { TextField, Button, Box } from '@mui/material';
 import { Container, Title } from './Login.styled';
 import { useRouter } from 'next/router';
+import { loginapi } from '@/service/apiUrls';
 
-type FormData = {
+export type FormData = {
     email: string;
     password: string;
 };
@@ -15,7 +16,11 @@ const Login = () => {
 
     // Handle form submission
     const onSubmit = (data: FormData) => {
-        router.push('/home') 
+        loginapi(data).then(()=>{
+            router.push('/home') 
+        }).catch((err)=>{
+            console.log('err------',err)
+        })
     };
 
     return (
