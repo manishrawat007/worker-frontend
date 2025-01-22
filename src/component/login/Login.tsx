@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { TextField, Button, Box } from '@mui/material';
 import { Container, Title } from './Login.styled';
 import { useRouter } from 'next/router';
 import { loginapi } from '@/service/apiUrls';
+import Cookies from 'js-cookie';
 
 export type FormData = {
     email: string;
@@ -13,11 +14,17 @@ export type FormData = {
 const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
     const router = useRouter()
+    useEffect(()=>{
+        // const token = Cookies.get('token');
+        // if(token){
+        //     router.push('/feeds')
+        // }
+    },[])
 
     // Handle form submission
     const onSubmit = (data: FormData) => {
         loginapi(data).then(()=>{
-            router.push('/home') 
+            router.push('/feeds') 
         }).catch((err)=>{
             console.log('err------',err)
         })

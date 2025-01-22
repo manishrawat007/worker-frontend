@@ -1,4 +1,4 @@
-import { feeds } from "@/service/apiUrls";
+import { feeds, passlike } from "@/service/apiUrls";
 import { useEffect, useState } from "react";
 import { Box } from "@mui/material";
 import Card from '@mui/material/Card';
@@ -25,10 +25,10 @@ export const UserFeeds = () => {
     const [page,setpage]=useState<number>(1)
 
     useEffect(() => {
-        feedapi(page)
+        feedapi()
     }, []);
 
-    const feedapi=(page:number)=>{
+    const feedapi=()=>{
         feeds(page).then((res) => {
             setFeedData(res?.data?.data);
         }).catch((err) => {
@@ -38,13 +38,16 @@ export const UserFeeds = () => {
 
     // Function to handle swiping
     const swiped = (direction: string, id: string) => {
-        console.log(direction , id)
         if(feedData.length==1){
             setpage(prev=>prev+1)
-            const pageSize= page +1
-            feedapi(pageSize)
+            feedapi()
         }
         setFeedData((prev)=>prev.filter((item)=>item._id != id))
+        passlike(direction,id).then((res)=>{
+            console.log(res)
+        }).catch((err)=>{
+            console.log("err---",err.message)
+        })
     };
 
     return (

@@ -31,3 +31,7 @@ export const loginapi=(payload:FormData)=>{
 export const feeds=(page:number)=>{
   return api.get(`/users?page=${page}&limit=10`)
 }
+
+export const passlike=(status:string,id:string)=>{
+  return api.post(`send/connection/${status}/${id}`)
+}
