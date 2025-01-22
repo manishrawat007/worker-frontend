@@ -28,6 +28,6 @@ export const loginapi=(payload:FormData)=>{
     return api.post('/login',payload,{withCredentials: true})
 }
 
-export const feeds=()=>{
-  return api.get('/users')
+export const feeds=(page:number)=>{
+  return api.get(`/users?page=${page}&limit=10`)
 }
