@@ -35,3 +35,19 @@ export const feeds=(page:number)=>{
 export const passlike=(status:string,id:string)=>{
   return api.post(`send/connection/${status}/${id}`)
 }
+
+export const pendingRequest=()=>{
+  return api.get('/user/connection/pending')
+}
+
+export const AcceptRejectRequest=(status:string,id:string)=>{
+  return api.patch(`/user/connection/interested/${status}/${id}`)
+}
+
+export const logout=()=>{
+  return api.post('/logout')
+}
+
+export const getfollowers=()=>{
+  return api.get('/user/followers')
+}

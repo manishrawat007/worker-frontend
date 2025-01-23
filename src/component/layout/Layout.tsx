@@ -1,31 +1,31 @@
-import Login from "@/component/login/Login";
 import { useRouter } from "next/router";
+import SideSlideBar from "../slidebar/SlideBar";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 
-export default function Home() {
+const Layout = ({ children }: any) => {
   const router = useRouter();
-  const [loading, setLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
     const token = Cookies.get("token");
     if (token) {
       setIsAuthenticated(true);
-      router.push("/feeds");
     } else {
-      setIsAuthenticated(false);
+      router.push("/");
     }
-    setLoading(false);
   }, [router]);
 
-  if (loading) {
+  if (!isAuthenticated) {
     return null;
   }
 
   return (
-    <>
-      {!isAuthenticated ? <Login /> : null}
-    </>
+    <div>
+      <SideSlideBar />
+      <div>{children}</div>
+    </div>
   );
-}
+};
+
+export default Layout;
