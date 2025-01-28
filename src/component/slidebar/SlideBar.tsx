@@ -69,11 +69,11 @@ const SideSlideBar = () => {
               </ListItemIcon>
               <ListItemText primary="Followers" />
             </ListItem>
-            <ListItem>
+            <ListItem onClick={()=>{router.push('/update')}}>
               <ListItemIcon>
                 <SettingsIcon />
               </ListItemIcon>
-              <ListItemText primary="Settings" />
+              <ListItemText primary="Details" />
             </ListItem>
             <ListItem onClick={handleLogout}>
               <ListItemIcon>

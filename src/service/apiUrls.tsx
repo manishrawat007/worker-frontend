@@ -2,7 +2,7 @@ import { FormData } from '@/component/login/Login';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-const api = axios.create({
+export const api = axios.create({
   baseURL: 'http://localhost:7777',
 });
 
@@ -50,4 +50,8 @@ export const logout=()=>{
 
 export const getfollowers=()=>{
   return api.get('/user/followers')
+}
+
+export const getProfile=()=>{
+  return api.get('/profile')
 }

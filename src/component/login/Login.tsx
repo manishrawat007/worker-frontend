@@ -14,12 +14,6 @@ export type FormData = {
 const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
     const router = useRouter()
-    useEffect(()=>{
-        // const token = Cookies.get('token');
-        // if(token){
-        //     router.push('/feeds')
-        // }
-    },[])
 
     // Handle form submission
     const onSubmit = (data: FormData) => {
