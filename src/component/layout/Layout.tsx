@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import SideSlideBar from "../slidebar/SlideBar";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
+import { Box } from "@mui/material";
 
 const Layout = ({ children }: any) => {
   const router = useRouter();
@@ -21,10 +22,10 @@ const Layout = ({ children }: any) => {
   }
 
   return (
-    <div>
+    <Box >
       <SideSlideBar />
-      <div>{children}</div>
-    </div>
+      <Box>{children}</Box>
+    </Box>
   );
 };
 

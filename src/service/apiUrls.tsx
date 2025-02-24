@@ -28,6 +28,10 @@ export const loginapi=(payload:FormData)=>{
     return api.post('/login',payload,{withCredentials: true})
 }
 
+export const signUp =(payload:any)=>{
+  return axios.post('http://localhost:7777/signup',payload)
+}
+
 export const feeds=(page:number)=>{
   return api.get(`/users?page=${page}&limit=10`)
 }
@@ -54,4 +58,12 @@ export const getfollowers=()=>{
 
 export const getProfile=()=>{
   return api.get('/profile')
+}
+
+export const getUsersDetails =(id:string)=>{
+  return api.get(`/posts/${id}`)
+}
+
+export const editProfile=(payload:any)=>{
+  return api.patch('profile/update',payload)
 }

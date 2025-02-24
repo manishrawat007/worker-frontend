@@ -16,13 +16,15 @@ const useFetch = <T, P = undefined, P2 = undefined>({
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    fetchDetails();
+    if (params !== undefined) {
+      fetchDetails()
+    }
   }, [params, payload]);
 
   const fetchDetails = async () => {
     try {
-        const response = await request(params as P, payload);
-        setData(response.data);
+      const response = await request(params as P, payload);
+      setData(response.data);
     } catch (err) {
       setError(err);
     } finally {
@@ -30,7 +32,7 @@ const useFetch = <T, P = undefined, P2 = undefined>({
     }
   };
 
-  return { data, error, loading,setData,reFetch:fetchDetails };
+  return { data, error, loading, setData, reFetch: fetchDetails };
 };
 
 export default useFetch;

@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { TextField, Button, Box } from '@mui/material';
-import { Container, Title } from './Login.styled';
+import { Account, Container, InnerComponent, Inputfield, SignupButton, StyledButton, Title } from './Login.styled';
 import { useRouter } from 'next/router';
 import { loginapi } from '@/service/apiUrls';
-import Cookies from 'js-cookie';
+// import Cookies from 'js-cookie';
 
 export type FormData = {
     email: string;
@@ -17,18 +17,18 @@ const Login = () => {
 
     // Handle form submission
     const onSubmit = (data: FormData) => {
-        loginapi(data).then(()=>{
-            router.push('/feeds') 
-        }).catch((err)=>{
-            console.log('err------',err)
+        loginapi(data).then(() => {
+            router.push('/feeds')
+        }).catch((err) => {
+            console.log('err------', err)
         })
     };
 
     return (
         <Container>
-            <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ maxWidth: 400, margin: 'auto', padding: 2 }}>
+            <InnerComponent component="form" onSubmit={handleSubmit(onSubmit)}>
                 <Title>Login</Title>
-                <TextField
+                <Inputfield
                     label="Email"
                     type="email"
                     fullWidth
@@ -46,7 +46,7 @@ const Login = () => {
                     margin="normal"
                 />
 
-                <TextField
+                <Inputfield
                     label="Password"
                     type="password"
                     fullWidth
@@ -66,10 +66,15 @@ const Login = () => {
                     margin="normal"
                 />
 
-                <Button type="submit" variant="contained" color="primary" fullWidth>
+                <StyledButton type="submit"
+                    variant="contained"
+                    color="primary"
+                    fullWidth>
                     Login
-                </Button>
-            </Box>
+                </StyledButton>
+
+                <Account onClick={() => router.push('/signup')}>Do not have account? <SignupButton>SignUP</SignupButton></Account>
+            </InnerComponent>
         </Container>
     );
 };

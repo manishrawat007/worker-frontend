@@ -1,97 +1,93 @@
 import React, { useEffect, useState } from "react";
-import { Avatar, Box, Button, List, ListItem, ListItemAvatar, ListItemText, Typography } from "@mui/material";
+import { Avatar, Box, Button, Card, Grid2, List, ListItem, ListItemAvatar, ListItemText, Typography } from "@mui/material";
 import { AcceptRejectRequest, pendingRequest } from "@/service/apiUrls";
+import { useRouter } from "next/router";
+import { Accept, Container, CustomListItem, Heading, ProfileCard, Reject, RequestContainer, RequestText } from "../user/styles/Request.styled";
+import { Error } from "../user/styles/Connections.styled";
 
 interface Requests {
-    fromUserId:{
-    _id:string,
-    firstName:string,
-    profile:string
-    }
+  fromUserId: {
+    _id: string,
+    firstName: string,
+    profile: string,
+    lastName: string
+  }
 }
 
 const IncomingRequests = () => {
-  const [requests,setRequests]=useState<Requests[]>([])
-  const [loading,setLoading]=useState<boolean>(true)
+  const [requests, setRequests] = useState<Requests[]>([])
+  const [loading, setLoading] = useState<boolean>(true)
+  const router = useRouter()
 
-  useEffect(()=>{
+  useEffect(() => {
     handlePendingRequest()
-  },[])
+  }, [])
 
-  const handlePendingRequest=()=>{
-    pendingRequest().then((res)=>{
-        setRequests(res?.data?.users)
-    }).catch((err)=>{
-        console.log('err-------',err.message)
+  const handlePendingRequest = () => {
+    pendingRequest().then((res) => {
+      setRequests(res?.data?.users)
+    }).catch((err) => {
+      console.log('err-------', err.message)
     })
   }
 
-  const handleAcceptDecline=(status:string,id:string)=>{
-    AcceptRejectRequest(status,id).then(()=>{
-        setRequests((prev)=>prev.filter(({fromUserId})=>fromUserId._id.toString() != id.toString()))
-    }).catch((err)=>{
-        console.log('err.message',err.message)
-    }).finally(()=>{
-        setLoading(false)
+  const handleAcceptDecline = (status: string, id: string) => {
+    AcceptRejectRequest(status, id).then(() => {
+      setRequests((prev) => prev.filter(({ fromUserId }) => fromUserId._id.toString() != id.toString()))
+    }).catch((err) => {
+      console.log('err.message', err.message)
+    }).finally(() => {
+      setLoading(false)
     })
   }
 
   return (
-    <Box
-      sx={{
-        maxWidth: 400,
-        margin: "20px auto",
-        padding: 2,
-        backgroundColor: "#f9f9f9",
-        borderRadius: "8px",
-        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
-      }}
-    >
-      <Typography variant="h6" sx={{ textAlign: "center", marginBottom: 2 }}>
-        Incoming Requests
-      </Typography>
+    <Container>
       <List>
-        {requests?.map((request) => (
-          <ListItem
-            key={request.fromUserId._id}
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              marginBottom: 2,
-              padding: "8px 0",
-            }}
-          >
-            <Box sx={{ display: "flex", alignItems: "center" }}>
-              <ListItemAvatar>
-                <Avatar src={request.fromUserId.profile} alt={request.fromUserId.firstName} />
-              </ListItemAvatar>
-              <ListItemText primary={request.fromUserId.firstName} />
-            </Box>
+        <Heading variant="h5">Requests</Heading>
+        <ProfileCard>
+          <Grid2 container spacing={2}>
+            {requests.length > 0 ? requests?.map((request) => (
+              <Grid2 size={{ xs: 12, sm: 12, md: 6, lg: 6 }} onClick={() => { router.push(`/user/${request.fromUserId._id}`) }}>
+                <Card sx={{ display: "flex", alignItems: "center", padding: 2 }}>
+                  <CustomListItem
+                    key={request.fromUserId._id}
+                  >
+                    <RequestContainer>
+                      <ListItemAvatar>
+                        <Avatar src={request.fromUserId.profile} alt={request.fromUserId.firstName} />
+                      </ListItemAvatar>
+                      <RequestText primary={request.fromUserId.firstName + ' ' + request.fromUserId.lastName} />
+                    </RequestContainer>
 
-            {/* Action Buttons */}
-            <Box>
-              <Button
-                variant="contained"
-                size="small"
-                sx={{ marginRight: 1, backgroundColor: "#4caf50", color: "#fff" }}
-                onClick={()=>handleAcceptDecline("accepted",request.fromUserId._id)}
-              >
-                Accept
-              </Button>
-              <Button
-                variant="outlined"
-                size="small"
-                sx={{ borderColor: "#f44336", color: "#f44336" }}
-                onClick={()=>handleAcceptDecline("rejected",request.fromUserId._id)}
-              >
-                Decline
-              </Button>
-            </Box>
-          </ListItem>
-        ))}
+                    <Box>
+                      <Accept
+                        variant="contained"
+                        size="small"
+                        onClick={(e) => { e.stopPropagation(), handleAcceptDecline("accepted", request.fromUserId._id) }}
+                      >
+                        Accept
+                      </Accept>
+                      <Reject
+                        variant="outlined"
+                        size="small"
+                        onClick={(e) => { e.stopPropagation(), handleAcceptDecline("rejected", request.fromUserId._id) }}
+                      >
+                        Decline
+                      </Reject>
+                    </Box>
+                  </CustomListItem>
+                </Card>
+              </Grid2>
+            )) : (
+              <Grid2 size={{ xs: 12 }}>
+                <Error>No User Found</Error>
+              </Grid2>
+            )}
+          </Grid2>
+        </ProfileCard>
       </List>
-    </Box>
+    </Container>
   );
 };
 

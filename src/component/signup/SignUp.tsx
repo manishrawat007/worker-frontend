@@ -1,0 +1,175 @@
+import React, { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { styled } from "@mui/material/styles";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import MenuItem from "@mui/material/MenuItem";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import { Grid2 } from "@mui/material";
+import { useRouter } from "next/router";
+import { signUp } from "@/service/apiUrls";
+import { FormContainer, Inputfield, StyledButton } from "../login/Login.styled";
+
+const SignUpComponent = () => {
+    const router = useRouter()
+    const [error, setError] = useState(null)
+
+    const defaultValues = {
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+        age: null,
+        gender: "",
+        skills: "",
+        bio: "",
+    };
+
+    const { control,
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm({ defaultValues });
+
+    const onSubmit = (formData: any) => {
+        signUp(formData).then(() => {
+            router.push('/')
+        }).catch((err) => {
+            setError(err.response.data)
+        })
+    };
+
+    return (
+        <FormContainer>
+            <Typography variant="h5" textAlign="center" marginBottom={2}>
+                Register your Details
+            </Typography>
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <Grid2 container spacing={2}>
+                    <Grid2 size={{ xs: 12, sm: 6, md: 4, lg: 4 }}>
+                        <Inputfield
+                            label="First Name"
+                            fullWidth
+                            margin="normal"
+                            {...register("firstName", { required: "First name is required" })}
+                            error={!!errors.firstName}
+                            helperText={errors.firstName?.message}
+                        />
+                    </Grid2>
+                    <Grid2 size={{ xs: 12, sm: 6, md: 4, lg: 4 }}>
+                        <Inputfield
+                            label="Last Name"
+                            fullWidth
+                            margin="normal"
+                            {...register("lastName")}
+                            error={!!errors.lastName}
+                            helperText={errors.lastName?.message}
+                        />
+                    </Grid2>
+
+                    <Grid2 size={{ xs: 12, sm: 6, md: 4, lg: 4 }}>
+                        <Inputfield
+                            label="Email"
+                            fullWidth
+                            margin="normal"
+                            {...register("email", {
+                                required: "Email is required",
+                                pattern: {
+                                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                                    message: "Enter a valid email address",
+                                }
+                            })}
+                            error={!!errors.email}
+                            helperText={errors.email?.message}
+                        />
+                    </Grid2>
+                    <Grid2 size={{ xs: 12, sm: 6, md: 4, lg: 4 }}>
+                        <Inputfield
+                            label="Password"
+                            fullWidth
+                            margin="normal"
+                            {...register("password", {
+                                required: "Password is required",
+                                pattern: {
+                                    value: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                                    message:
+                                        "Password must include at least one uppercase letter, one lowercase letter, one number, and one special character",
+                                }
+                            })}
+                            error={!!errors.password}
+                            helperText={errors.password?.message}
+                        />
+                    </Grid2>
+                    <Grid2 size={{ xs: 12, sm: 6, md: 4, lg: 4 }}>
+                        <Inputfield
+                            label="Age"
+                            type="number"
+                            fullWidth
+                            margin="normal"
+                            {...register("age", { required: "Age is required" })}
+                            error={!!errors.age}
+                            helperText={errors.age?.message}
+                        />
+                    </Grid2>
+                    <Grid2 size={{ xs: 12, sm: 6, md: 4, lg: 4 }}>
+                        <Controller
+                            name="gender"
+                            control={control}
+                            render={({ field }) => (
+                                <Inputfield
+                                    select
+                                    label="Gender"
+                                    fullWidth
+                                    margin="normal"
+                                    {...field}
+                                    {...register("gender", { required: "Gender is required" })}
+                                    error={!!errors.gender}
+                                    helperText={errors.gender?.message}
+                                >
+                                    <MenuItem value="male">Male</MenuItem>
+                                    <MenuItem value="female">Female</MenuItem>
+                                    <MenuItem value="other">Other</MenuItem>
+                                </Inputfield>
+                            )}
+                        />
+                    </Grid2>
+                    <Grid2 size={{ xs: 12, sm: 6, md: 4, lg: 4 }}>
+                        <Inputfield
+                            label="Skills"
+                            fullWidth
+                            margin="normal"
+                            {...register("skills", { required: "Skills are required" })}
+                            error={!!errors.skills}
+                            helperText={errors.skills?.message}
+                        />
+                    </Grid2>
+
+                    <Grid2 size={{ xs: 12, sm: 6, md: 8, lg: 8 }}>
+                        <Inputfield
+                            label="Bio"
+                            fullWidth
+                            margin="normal"
+                            rows={4}
+                            {...register("bio", { required: "Bio is required" })}
+                            error={!!errors.bio}
+                            helperText={errors.bio?.message}
+                        />
+                    </Grid2>
+                </Grid2>
+
+                <StyledButton
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    fullWidth
+                >
+                    Register
+                </StyledButton>
+            </form>
+            {error && <Box sx={{ color: "red", textAlign: "center", margin: "10px 0px" }}>{error}</Box>}
+        </FormContainer>
+    );
+};
+
+export default SignUpComponent;

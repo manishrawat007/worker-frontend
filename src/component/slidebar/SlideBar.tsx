@@ -1,17 +1,21 @@
-import React, { useState } from "react";
-import { Box, Drawer, List, ListItem, ListItemIcon, ListItemText, IconButton } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
+import React, { useContext, useState } from "react";
+import { Box, Drawer, List, ListItem } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
-import SettingsIcon from "@mui/icons-material/Settings";
-import RequestPageIcon from '@mui/icons-material/RequestPage';
+import ContrastIcon from '@mui/icons-material/Contrast';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
 import { useRouter } from "next/router";
 import { logout } from "@/service/apiUrls";
 import LogoutIcon from '@mui/icons-material/Logout';
 import Cookies from 'js-cookie';
+import ThemeToggle from "./ThemeToggle";
+import DetailsIcon from '@mui/icons-material/Details';
+import { ThemeContext } from "@/styles/ThemeProvider";
+import { CustomListItem, CustomListItemText, Icons, MenuBar } from "./SlideBar.styled";
 
 const SideSlideBar = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const router = useRouter()
+  const { darkMode } = useContext(ThemeContext)
 
   const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
     if (
@@ -23,26 +27,23 @@ const SideSlideBar = () => {
     setIsDrawerOpen(open);
   };
 
-  const handleLogout=()=>{
-    logout().then((res)=>{
-      Cookies.set('token',"");
+  const handleLogout = () => {
+    logout().then((res) => {
+      Cookies.set('token', "");
       router.push('/')
-    }).catch((err)=>{
-      console.log('some error in logout',err)
+    }).catch((err) => {
+      console.log('some error in logout', err)
     })
   }
 
   return (
     <Box>
-      {/* Menu Button */}
-      <IconButton
+      <Icons
         onClick={() => setIsDrawerOpen(true)}
-        sx={{ position: "absolute", top: 16, left: 16 }}
       >
-        <MenuIcon />
-      </IconButton>
+        <MenuBar />
+      </Icons>
 
-      {/* Drawer */}
       <Drawer anchor="left" open={isDrawerOpen} onClose={toggleDrawer(false)}>
         <Box
           sx={{ width: 250 }}
@@ -50,36 +51,30 @@ const SideSlideBar = () => {
           onClick={toggleDrawer(false)}
           onKeyDown={toggleDrawer(false)}
         >
-          <List style={{cursor:"pointer"}}>
-            <ListItem  onClick={()=>router.push('/feeds')}>
-              <ListItemIcon>
+          <List style={{ cursor: "pointer" }}>
+            <ListItem onClick={() => router.push('/feeds')}>
+              <CustomListItem>
                 <HomeIcon />
-              </ListItemIcon>
-              <ListItemText primary="Home" />
+              </CustomListItem>
+              <CustomListItemText primary="Home" />
             </ListItem>
-            <ListItem onClick={()=>{router.push('/requests')}}>
-              <ListItemIcon>
-                <RequestPageIcon />
-              </ListItemIcon>
-              <ListItemText primary="Requests" />
+            <ListItem onClick={() => { router.push('/user/profile') }}>
+              <CustomListItem>
+                <DetailsIcon />
+              </CustomListItem>
+              <CustomListItemText primary="Details" />
             </ListItem>
-            <ListItem onClick={()=>{router.push('/followers')}}>
-              <ListItemIcon>
-                <LogoutIcon />
-              </ListItemIcon>
-              <ListItemText primary="Followers" />
-            </ListItem>
-            <ListItem onClick={()=>{router.push('/update')}}>
-              <ListItemIcon>
-                <SettingsIcon />
-              </ListItemIcon>
-              <ListItemText primary="Details" />
+            <ListItem>
+              <CustomListItem>
+                {darkMode ? <DarkModeIcon /> : <ContrastIcon />}
+              </CustomListItem>
+              <ThemeToggle />
             </ListItem>
             <ListItem onClick={handleLogout}>
-              <ListItemIcon>
+              <CustomListItem>
                 <LogoutIcon />
-              </ListItemIcon>
-              <ListItemText primary="Logout" />
+              </CustomListItem>
+              <CustomListItemText primary="Logout" />
             </ListItem>
           </List>
         </Box>

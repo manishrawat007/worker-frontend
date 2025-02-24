@@ -1,6 +1,13 @@
 import "@/styles/globals.css";
+import { ThemeContextProvider } from "@/styles/ThemeProvider";
+import { CssBaseline } from "@mui/material";
 import type { AppProps } from "next/app";
 
 export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />;
+  return (
+    <ThemeContextProvider>
+      <CssBaseline />
+      <Component {...pageProps} />
+    </ThemeContextProvider>
+  )
 }
