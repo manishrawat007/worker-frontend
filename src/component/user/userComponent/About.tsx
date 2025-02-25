@@ -6,7 +6,7 @@ import React from "react";
 import { Box, Typography, Grid2, Chip, Stack } from "@mui/material";
 import { useUser } from "../context/UserContext"
 import { PostList } from "./UsersProfiles";
-import { CustomChip, Heading, HighlightText, ProfileCard, Text, UserDetailsBox } from "../styles/About.styled";
+import { CustomChip, Heading, HighlightText, ProfileCard, SkillsContainer, Text, UserDetailsBox } from "../styles/About.styled";
 
 const AboutUser = () => {
     const { userData } = useUser()
@@ -52,19 +52,14 @@ const AboutUser = () => {
                             </Stack>
                         </Grid2>
                     </Grid2>
-                    <Stack direction="row" spacing={2} mt={3} mb={3}>
+                    <SkillsContainer direction="row" spacing={2} mt={3} mb={3}>
                         {userData?.skills.map((skill: String, index: number) => (
                             <CustomChip key={index} label={skill} />
                         ))}
-                    </Stack>
+                    </SkillsContainer>
                     <HighlightText variant="h6">{userData.bio}</HighlightText>
                 </ProfileCard>
-                <Box>
-                    <Heading variant="h5" >Posts</Heading>
-                    <ProfileCard>
-                        <PostList posts={userPosts} />
-                    </ProfileCard>
-                </Box>
+                <PostList posts={userPosts} />
 
             </UserDetailsBox>
 

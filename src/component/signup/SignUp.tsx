@@ -10,6 +10,7 @@ import { Grid2 } from "@mui/material";
 import { useRouter } from "next/router";
 import { signUp } from "@/service/apiUrls";
 import { FormContainer, Inputfield, StyledButton } from "../login/Login.styled";
+import { ChooseImage } from "../user/styles/Edit.styled";
 
 const SignUpComponent = () => {
     const router = useRouter()
@@ -24,6 +25,8 @@ const SignUpComponent = () => {
         gender: "",
         skills: "",
         bio: "",
+        profilePic: "",
+        coverPic: ""
     };
 
     const { control,
@@ -33,7 +36,20 @@ const SignUpComponent = () => {
     } = useForm({ defaultValues });
 
     const onSubmit = (formData: any) => {
-        signUp(formData).then(() => {
+        const formdata = new FormData()
+        formdata.append("firstName", formData.firstName)
+        formdata.append("lastName", formData.lastName)
+        formdata.append("email", formData.email)
+        formdata.append("password", formData.password)
+        formdata.append("age", formData.age)
+        formdata.append("gender", formData.gender)
+        formdata.append("skills", formData.skills.split(', '))
+        formdata.append("bio", formData.bio)
+        formdata.append("profilePic", formData.profilePic?.[0])
+        formdata.append("coverPic", formData.coverPic?.[0])
+
+
+        signUp(formdata).then(() => {
             router.push('/')
         }).catch((err) => {
             setError(err.response.data)
@@ -155,6 +171,52 @@ const SignUpComponent = () => {
                             error={!!errors.bio}
                             helperText={errors.bio?.message}
                         />
+                    </Grid2>
+
+                    <Grid2 size={{ xs: 12, sm: 6, md: 4, lg: 4 }}>
+                        <Box sx={{ textAlign: "center" }}>
+                            <Inputfield
+                                type="file"
+                                id="upload-button"
+                                style={{ display: "none" }}
+                                {...register("profilePic", { required: "Profile picture is required" })}
+                                error={!!errors.profilePic}
+                                helperText={errors.profilePic?.message}
+                            />
+                            <label htmlFor="upload-button">
+                                <ChooseImage>
+                                    Upload Profile picture
+                                </ChooseImage>
+                            </label>
+                            {errors.profilePic && (
+                                <Typography sx={{ color: "red", mt: 1, fontSize: "12px", textAlign: "left" }}>
+                                    {errors.profilePic.message}
+                                </Typography>
+                            )}
+                        </Box>
+                    </Grid2>
+
+                    <Grid2 size={{ xs: 12, sm: 6, md: 8, lg: 8 }}>
+                        <Box sx={{ textAlign: "center" }}>
+                            <Inputfield
+                                type="file"
+                                id="cover-button"
+                                style={{ display: "none" }}
+                                {...register("coverPic", { required: "Cover picture is required" })}
+                                error={!!errors.coverPic}
+                                helperText={errors.coverPic?.message}
+                            />
+                            <label htmlFor="cover-button">
+                                <ChooseImage>
+                                    Upload Cover picture
+                                </ChooseImage>
+                            </label>
+                            {errors.coverPic && (
+                                <Typography sx={{ color: "red", mt: 1, fontSize: "12px", textAlign: "left" }}>
+                                    {errors.coverPic.message}
+                                </Typography>
+                            )}
+                        </Box>
                     </Grid2>
                 </Grid2>
 

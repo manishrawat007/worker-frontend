@@ -78,13 +78,13 @@ export const CardContainer = styled(Box)(({ theme }) => ({
     overflow: 'hidden',
     boxShadow: "1px 5px 10px gray",
     cursor: 'pointer',
-    height: "300px"
+    height: "300px",
 }))
 
 export const ImageContainer = styled('img')(({ theme }) => ({
     width: '100%',
     height: '250px',
-    objectFit: 'cover'
+    objectFit: 'fill'
 }))
 
 export const CustomIcon = styled(IconButton)(({ theme }) => ({

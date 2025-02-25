@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Avatar, Box, Button, Card, Grid2, List, ListItem, ListItemAvatar, ListItemText, Typography } from "@mui/material";
 import { AcceptRejectRequest, pendingRequest } from "@/service/apiUrls";
 import { useRouter } from "next/router";
-import { Accept, Container, CustomListItem, Heading, ProfileCard, Reject, RequestContainer, RequestText } from "../user/styles/Request.styled";
-import { Error } from "../user/styles/Connections.styled";
+import { Accept, ButtonContainer, Container, CustomListItem, Heading, ProfileCard, Reject, RequestContainer, RequestText } from "../styles/Request.styled";
+import { Error } from "../styles/Connections.styled";
 
 interface Requests {
   fromUserId: {
@@ -48,7 +48,7 @@ const IncomingRequests = () => {
         <ProfileCard>
           <Grid2 container spacing={2}>
             {requests.length > 0 ? requests?.map((request) => (
-              <Grid2 size={{ xs: 12, sm: 12, md: 6, lg: 6 }} onClick={() => { router.push(`/user/${request.fromUserId._id}`) }}>
+              <Grid2 size={{ xs: 12, sm: 12, md: 12, lg: 6 }} onClick={() => { router.push(`/user/${request.fromUserId._id}`) }}>
                 <Card sx={{ display: "flex", alignItems: "center", padding: 2 }}>
                   <CustomListItem
                     key={request.fromUserId._id}
@@ -60,7 +60,7 @@ const IncomingRequests = () => {
                       <RequestText primary={request.fromUserId.firstName + ' ' + request.fromUserId.lastName} />
                     </RequestContainer>
 
-                    <Box>
+                    <ButtonContainer>
                       <Accept
                         variant="contained"
                         size="small"
@@ -75,7 +75,7 @@ const IncomingRequests = () => {
                       >
                         Decline
                       </Reject>
-                    </Box>
+                    </ButtonContainer>
                   </CustomListItem>
                 </Card>
               </Grid2>

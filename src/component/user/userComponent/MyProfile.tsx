@@ -1,32 +1,36 @@
 import { FC, lazy, Suspense, useState } from 'react';
-import { Box} from '@mui/material';
+import { Box } from '@mui/material';
 import TabContext from '@mui/lab/TabContext';
 import TabPanel from '@mui/lab/TabPanel';
 import Loader from '@/custom/loader/Loader';
 import AboutUser from './About';
 import { useUser } from '../context/UserContext';
-import { CoverContainer, InsideCover, MainContainer, Profile, ProfileContainer, TabButton, TabListContainer, Tabs, Text } from '../styles/Myprofile.styled';
+import EditIcon from '@mui/icons-material/Edit';
+import { CoverContainer, EditIconContainer, InsideCover, MainContainer, Profile, ProfileContainer, TabButton, TabListContainer, TabpanelContainer, Tabs, Text } from '../styles/Myprofile.styled';
 const EditProfile = lazy(() => import('./EditProfile'))
-const UserList = lazy(() => import('../../followers/Follower'))
-const IncomingRequests = lazy(() => import('../../requests/Request'))
+const UserList = lazy(() => import('./Follower'))
+const IncomingRequests = lazy(() => import('./Request'))
 
 export const MyProfile: FC<{ user: any }> = ({ user }) => {
     const [value, setValue] = useState('1');
-    const {userData} = useUser()
+    const { userData } = useUser()
     const handleChange = (event: React.SyntheticEvent, newValue: string) => {
         setValue(newValue);
     };
 
     return (
         <MainContainer>
-            <CoverContainer>
+            <CoverContainer bgImage={userData.cover}>
                 <InsideCover>
                     <ProfileContainer>
                         <Profile
                             src={userData.profile}
-                            alt={userData?.firstName}    
+                            alt={userData?.firstName}
                         />
                         <Text variant="h6">{userData?.firstName} {userData?.lastName ? userData.lastName : ''}</Text>
+                        <EditIconContainer>
+                            <EditIcon sx={{height:"30px",width:"30px"}}/>
+                        </EditIconContainer>
                     </ProfileContainer>
                 </InsideCover>
             </CoverContainer>
@@ -41,12 +45,12 @@ export const MyProfile: FC<{ user: any }> = ({ user }) => {
                         </Tabs>
                     </TabListContainer>
                     <Suspense fallback={<Loader />}>
-                        <Box sx={{ padding: "20px" }}>
-                            <TabPanel value="1"><AboutUser/></TabPanel>
+                        <TabpanelContainer>
+                            <TabPanel value="1"><AboutUser /></TabPanel>
                             <TabPanel value="2"><EditProfile /></TabPanel>
                             <TabPanel value="3"><UserList /></TabPanel>
                             <TabPanel value="4"><IncomingRequests /></TabPanel>
-                        </Box>
+                        </TabpanelContainer>
                     </Suspense>
                 </TabContext>
             </Box>

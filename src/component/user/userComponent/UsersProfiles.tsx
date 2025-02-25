@@ -59,7 +59,6 @@ export const PostList: FC<{ posts: any[] }> = ({ posts }) => {
         <Grid2 container spacing={2}>
           {posts.length > 0 ? posts.map((post) => (
             <Grid2 size={{ xs: 12, sm: 6, md: 4 }} key={post.id}>
-
               <CardContainer
                 onClick={() => handleImageClick(post.image)}
               >

@@ -16,6 +16,7 @@ type UserProfile = {
     gender: string;
     skills: string[];
     bio: string;
+    cover:string
 };
 
 export const UserFeeds = () => {
@@ -71,7 +72,7 @@ export const UserFeeds = () => {
                     }}
                 >
                     <ProfileCard >
-                        <CustomCard />
+                        <CustomCard bgImage={feed.cover}/>
                         <MediaContainer >
                             <CustomCardMedia
                                 image={feed.profile}

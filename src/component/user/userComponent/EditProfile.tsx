@@ -2,15 +2,17 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Box from "@mui/material/Box";
 import { Grid2 } from "@mui/material";
-import { editProfile } from "@/service/apiUrls";
+import { editProfile, uploadPost } from "@/service/apiUrls";
 import { useUser } from "../context/UserContext";
-import { ChooseImage, Close, CloseContainer, FormContainer, InputField, PreviewContainer, PreviewImage, ResetButton, StyledButton } from "../styles/Edit.styled";
-import { Heading, ProfileCard } from "../styles/About.styled";
+import { ButtonsContainer, ChooseImage, Close, CloseContainer, FormContainer, Heading, InputField, PostContainer, PreviewContainer, PreviewImage, ProfileCard, ResetButton, StyledButton } from "../styles/Edit.styled";
+import { Inputfield } from "@/component/login/Login.styled";
 
 const EditProfile = () => {
     const [error, setError] = useState<String | null>(null)
     const { userData, setUserData } = useUser()
-    const [image, setImage] = useState<string | null>(null);
+    const [image, setImage] = useState<File | null>(null);
+    const [imageUrl, setImageUrl] = useState<string | null>(null);
+    const [message, setMessage] = useState<string>('Image');
 
     const defaultValues = {
         firstName: "",
@@ -59,17 +61,31 @@ const EditProfile = () => {
     const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (file) {
-            const imageUrl = URL.createObjectURL(file);
-            setImage(imageUrl);
+            const url = URL?.createObjectURL(file)
+            setImage(file);
+            setImageUrl(url)
         }
     };
 
-    const handleReset=()=>{
+    const handleReset = () => {
         setImage(null)
+        setImageUrl(null)
     }
 
     const handleUpload = () => {
-
+        let formData = new FormData()
+        if (image instanceof File) {
+            formData.append("image", image);
+        }
+        if (typeof message === "string") {
+            formData.append("message", message);
+        }
+        uploadPost(formData).then((res) => {
+            setImage(null);
+            setImageUrl(null)
+        }).catch((err) => {
+            console.log("error----------", err.message)
+        })
     };
 
     return (
@@ -139,20 +155,31 @@ const EditProfile = () => {
                 </form>
                 {error && <Box sx={{ color: "red", textAlign: "center" }}>{error}</Box>}
             </ProfileCard>
-            <Heading variant="h5">Upload a Image</Heading>
+            <Heading variant="h5">Upload a Post</Heading>
             <ProfileCard >
-                {image ? (
-                    <Box>
+                {imageUrl ? (
+                    <PostContainer>
                         <PreviewContainer>
-                            <PreviewImage src={image} alt="Uploaded Image" />
+                            <PreviewImage src={imageUrl} alt="Uploaded Image" />
                             <CloseContainer onClick={handleReset}>
-                                <Close/>
+                                <Close />
                             </CloseContainer>
                         </PreviewContainer>
-                        <ResetButton onClick={handleUpload} variant="outlined">
-                            Upload Image
-                        </ResetButton>
-                    </Box>
+                        <ButtonsContainer>
+                            <Inputfield
+                                label="Message"
+                                fullWidth
+                                margin="normal"
+                                rows={4}
+                                value={message}
+                                onChange={(e) => setMessage(e.target.value)}
+                                InputLabelProps={{ shrink: true }}
+                            />
+                            <ResetButton onClick={handleUpload} variant="outlined">
+                                Upload Post
+                            </ResetButton>
+                        </ButtonsContainer>
+                    </PostContainer>
                 ) : (
                     <Box sx={{ textAlign: "center", padding: 2 }}>
                         <input
@@ -164,7 +191,7 @@ const EditProfile = () => {
                         />
                         <label htmlFor="upload-button">
                             <ChooseImage>
-                                Upload Image
+                                Upload a Post
                             </ChooseImage>
                         </label>
                     </Box>)}

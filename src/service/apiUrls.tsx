@@ -67,3 +67,7 @@ export const getUsersDetails =(id:string)=>{
 export const editProfile=(payload:any)=>{
   return api.patch('profile/update',payload)
 }
+
+export const uploadPost=(payload:any)=>{
+  return api.post('/post/upload',payload)
+}

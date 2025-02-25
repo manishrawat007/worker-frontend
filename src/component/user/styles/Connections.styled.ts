@@ -8,7 +8,10 @@ export const Container = styled(Box)(({ theme }) => ({
     backgroundColor: theme.palette.background.default,
     padding: "20px",
     borderRadius: "8px",
-    boxShadow: "1px 2px 5px gray"
+    boxShadow: "1px 2px 5px gray",
+    [theme.breakpoints.down("sm")]: {
+        padding:"10px",
+    }
 }))
 
 export const Heading = styled(Typography)(({ theme }) => ({
@@ -22,13 +25,23 @@ export const ProfileCard = styled(Box)(({ theme }) => ({
     padding: "40px",
     borderRadius: "12px",
     boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
+    [theme.breakpoints.down("sm")]: {
+        padding:"10px",
+    }
 }))
 
-export const CustomCard = styled(Card)(() => ({
+export const CustomMainCard = styled(Card)(() => ({
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems:"center",
+    padding:"0px 10px",
+    borderRadius: "5px",
+    cursor:"pointer"
+}))
+
+export const CustomCard = styled(Box)(() => ({
     display: "flex",
     alignItems: "center",
-    padding: "5px 10px",
-    borderRadius: "5px"
 }))
 
 export const CustomText = styled(Typography)(({theme}) => ({

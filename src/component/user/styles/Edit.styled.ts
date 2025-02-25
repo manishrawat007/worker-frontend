@@ -1,11 +1,15 @@
 import { Avatar, Box, Button, styled, TextField, Typography } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
+import { Padding } from "@mui/icons-material";
 
 export const FormContainer = styled(Box)(({ theme }) => ({
     padding: "20px",
     boxShadow: "1px 2px 5px gray",
     borderRadius: "8px",
-    backgroundColor: theme.palette.background.default
+    backgroundColor: theme.palette.background.default,
+    [theme.breakpoints.down("sm")]: {
+        padding:"10px",
+    }
 }))
 
 export const Heading = styled(Typography)(({ theme }) => ({
@@ -19,6 +23,10 @@ export const ProfileCard = styled(Box)(({ theme }) => ({
     padding: "40px",
     borderRadius: "12px",
     boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
+
+    [theme.breakpoints.down("sm")]: {
+        padding:"10px",
+    }
 }))
 
 export const InputField = styled(TextField)(({ theme }) => ({
@@ -48,24 +56,57 @@ export const StyledButton = styled(Button)(({ theme }) => ({
         backgroundColor: "#0056b3",
     },
     fontSize: 4 * theme.typography.fontSize,
-    color: theme.palette.text.primary
+    color: theme.palette.text.primary,
+    textTransform:"none"
 }))
 
+export const PostContainer = styled(Box)(({ theme }) => ({
+    display:"flex",
+    justifyContent:"flex-start",
+    flexDirection:"row",
+    gap:"40px",
+
+    [theme.breakpoints.down("md")]: {
+        flexDirection:"column",
+        gap:"10px"
+    }
+}))
+
+
 export const PreviewContainer = styled(Box)(({ theme }) => ({
-    position: "relative"
+    position: "relative",
+    width:"50%",
+    height:"400px",
+
+    [theme.breakpoints.down("md")]: {
+        width:"100%",
+        height:"300px"
+    }
 }))
 
 export const PreviewImage = styled('img')(({ theme }) => ({
     borderRadius: '8px',
     width: "100%",
-    height: "400px"
+    height: "100%",
+}))
+
+export const ButtonsContainer = styled(Box)(({ theme }) => ({
+    display:"flex",
+    justifyContent:"center",
+    alignItems:"center",
+    flexDirection:"column",
+    gap:"5px",
+    width:"50%",
+    [theme.breakpoints.down("md")]: {
+        width:"100%",
+    }
 }))
 
 export const CloseContainer = styled(Box)(({ theme }) => ({
     position: "absolute",
     right: "20px",
     top: "10px",
-    zIndex: 5,
+    zIndex: 10,
     fontSize: 4 * theme.typography.fontSize,
 }))
 
@@ -77,7 +118,6 @@ export const Close = styled(CloseIcon)(({ theme }) => ({
 
 
 export const ResetButton = styled(Button)(({ theme }) => ({
-    margin: "15px 0px",
     backgroundColor: "#007bff",
     "&:hover": {
         backgroundColor: "#0056b3",
@@ -85,7 +125,8 @@ export const ResetButton = styled(Button)(({ theme }) => ({
     fontSize: 4 * theme.typography.fontSize,
     color: theme.palette.text.primary,
     width: "100%",
-    border: "none"
+    border: "none",
+    textTransform:"none"
 }))
 
 export const ChooseImage = styled(Box)(({ theme }) => ({
