@@ -36,7 +36,7 @@ const UserList = () => {
             <ProfileCard >
                 <Grid container spacing={2}>
                     {users.length > 0 ? users?.map((user) => (
-                        <Grid size={{ xs: 12, sm: 12, md: 12,lg:6 }} key={user._id} onClick={(e) => {
+                        <Grid size={{ xs: 12, sm: 12, md: 12, lg: 6 }} key={user._id} onClick={(e) => {
                             router.push(`/user/${user._id}`),
                                 e.stopPropagation()
                         }}>
@@ -54,7 +54,10 @@ const UserList = () => {
                                 <Accept
                                     variant="contained"
                                     size="small"
-                                    onClick={(e) => { e.stopPropagation() }}
+                                    onClick={(e) => {
+                                        e.stopPropagation(),
+                                        router.push(`/chat/${user._id}`)
+                                    }}
                                 >
                                     Message
                                 </Accept>

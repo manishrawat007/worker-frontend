@@ -71,3 +71,12 @@ export const editProfile=(payload:any)=>{
 export const uploadPost=(payload:any)=>{
   return api.post('/post/upload',payload)
 }
+
+export const sendMessage=(recieverId:any,payload:{message:string})=>{
+  return api.post(`/send/message/${recieverId}`,payload)
+}
+
+export const getUserMessage=(recieverId:any,)=>{
+  return api.get(`/user/message/${recieverId}`)
+}
+
