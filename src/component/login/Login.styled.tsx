@@ -80,13 +80,14 @@ export const FormContainer = styled(Box)(({ theme }) => ({
 
 export const StyledButton = styled(Button)(({ theme }) => ({
     margin: "15px 0px 15px",
-    padding: "10px",
+    padding: "5px",
     backgroundColor: "#007bff",
     color: theme.palette.text.primary,
     fontSize: 4 * theme.typography.fontSize,
     "&:hover": {
         backgroundColor: "#0056b3",
     },
+    textTransform:"capitalize"
 
 }))
 

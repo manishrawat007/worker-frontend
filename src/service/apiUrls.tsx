@@ -80,3 +80,11 @@ export const getUserMessage=(recieverId:any,)=>{
   return api.get(`/user/message/${recieverId}`)
 }
 
+export const verifyOtp=(payload:any)=>{
+  return api.post(`/verify-otp`,payload)
+}
+
+export const userMessagesList =()=>{
+  return api.get(`/users/message/list`)
+}
+

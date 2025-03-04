@@ -10,6 +10,7 @@ import Cookies from 'js-cookie';
 import ThemeToggle from "./ThemeToggle";
 import DetailsIcon from '@mui/icons-material/Details';
 import { ThemeContext } from "@/styles/ThemeProvider";
+import MessageIcon from '@mui/icons-material/Message';
 import { CustomListItem, CustomListItemText, Icons, MenuBar } from "./SlideBar.styled";
 
 const SideSlideBar = () => {
@@ -69,6 +70,12 @@ const SideSlideBar = () => {
                 {darkMode ? <DarkModeIcon /> : <ContrastIcon />}
               </CustomListItem>
               <ThemeToggle />
+            </ListItem>
+            <ListItem onClick={() => { router.push('/messages')}}>
+              <CustomListItem>
+                <MessageIcon />
+              </CustomListItem>
+              <CustomListItemText primary="Messages" />
             </ListItem>
             <ListItem onClick={handleLogout}>
               <CustomListItem>

@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { Container, CustomCard, CustomMainCard, CustomText, Error, Heading } from "../styles/Connections.styled";
 import { ProfileCard } from "../styles/About.styled";
 import { Accept } from "../styles/Request.styled";
+import Loader from "@/custom/loader/Loader";
 
 interface FollowersTypes {
     _id: string,
@@ -16,7 +17,7 @@ interface FollowersTypes {
 
 const UserList = () => {
     const router = useRouter();
-    const [users, setUsers] = useState<FollowersTypes[]>([])
+    const [users, setUsers] = useState<FollowersTypes[] | null>(null)
 
     useEffect(() => {
         handlePendingRequest()
@@ -28,6 +29,10 @@ const UserList = () => {
         }).catch((err) => {
             console.log('err-------', err.message)
         })
+    }
+
+    if (!users) {
+        return <Loader />
     }
 
     return (
@@ -56,7 +61,7 @@ const UserList = () => {
                                     size="small"
                                     onClick={(e) => {
                                         e.stopPropagation(),
-                                        router.push(`/chat/${user._id}`)
+                                            router.push(`/chat/${user._id}`)
                                     }}
                                 >
                                     Message

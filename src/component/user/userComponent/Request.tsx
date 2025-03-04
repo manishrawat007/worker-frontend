@@ -4,6 +4,7 @@ import { AcceptRejectRequest, pendingRequest } from "@/service/apiUrls";
 import { useRouter } from "next/router";
 import { Accept, ButtonContainer, Container, CustomListItem, Heading, ProfileCard, Reject, RequestContainer, RequestText } from "../styles/Request.styled";
 import { Error } from "../styles/Connections.styled";
+import Loader from "@/custom/loader/Loader";
 
 interface Requests {
   fromUserId: {
@@ -28,6 +29,8 @@ const IncomingRequests = () => {
       setRequests(res?.data?.users)
     }).catch((err) => {
       console.log('err-------', err.message)
+    }).finally(() => {
+      setLoading(false)
     })
   }
 
@@ -36,9 +39,11 @@ const IncomingRequests = () => {
       setRequests((prev) => prev.filter(({ fromUserId }) => fromUserId._id.toString() != id.toString()))
     }).catch((err) => {
       console.log('err.message', err.message)
-    }).finally(() => {
-      setLoading(false)
     })
+  }
+
+  if (loading) {
+    return <Loader />
   }
 
   return (
