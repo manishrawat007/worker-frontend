@@ -88,3 +88,7 @@ export const userMessagesList =()=>{
   return api.get(`/users/message/list`)
 }
 
+export const updateProfileAndCoverPic =(payload:any)=>{
+  return api.patch(`/profile/update/cover`,payload)
+}
+

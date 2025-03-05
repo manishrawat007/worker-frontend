@@ -23,6 +23,11 @@ export const ProfileCard = styled(Box)(({ theme }) => ({
     padding: "40px",
     borderRadius: "12px",
     boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
+    overflowY: "auto",
+    scrollbarWidth: "none",
+    "&::-webkit-scrollbar": {
+      display: "none",
+    },
 
     [theme.breakpoints.down("sm")]: {
         padding:"10px",
@@ -65,6 +70,7 @@ export const PostContainer = styled(Box)(({ theme }) => ({
     justifyContent:"flex-start",
     flexDirection:"row",
     gap:"40px",
+    marginBottom:"30px",
 
     [theme.breakpoints.down("md")]: {
         flexDirection:"column",

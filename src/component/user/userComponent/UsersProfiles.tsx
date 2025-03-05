@@ -1,6 +1,6 @@
 import { FC, useState } from 'react';
-import { Box, Typography, Avatar, Grid2 } from '@mui/material';
-import { Dialog, DialogContent, IconButton } from '@mui/material';
+import { Box, Typography, Grid2 } from '@mui/material';
+import { Dialog, DialogContent } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { BioText, CardContainer, CustomAvatar, CustomIcon, DetailsContainer, ImageContainer, InnerContainer, InnerPostsContainer, MainContainer, PostsContainer, PreviewImageContainer, ProfileContainer, UserNametext } from '../styles/UsersProfiles.styled';
 import { Error } from '../styles/Connections.styled';

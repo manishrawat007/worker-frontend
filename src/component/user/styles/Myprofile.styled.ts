@@ -1,5 +1,6 @@
 import { TabList } from "@mui/lab";
 import { Avatar, Box, styled, Tab, Typography } from "@mui/material";
+import EditIcon from '@mui/icons-material/Edit';
 
 export const MainContainer = styled(Box)(() => ({
   width: '100%',
@@ -19,6 +20,20 @@ export const CoverContainer = styled(Box)<{ bgImage?: string }>(({bgImage}) => (
   backgroundSize: 'cover',
   backgroundPosition: 'center',
 }))
+
+export const MoreIconContainer = styled(Box)(({ theme }) => ({
+  position: "absolute",
+  zIndex: 2,
+  right:"20px",
+  bottom:"20px",
+  backgroundColor:theme.palette.background.paper,
+  height:"40px",
+  width:"40px",
+  borderRadius:"50%",
+  display:"flex",
+  justifyContent:"center",
+  alignItems:"center"
+}));
 
 export const InsideCover = styled(Box)(({ theme }) => ({
   position: "absolute",
@@ -48,10 +63,17 @@ export const ProfileContainer = styled(Box)(({ theme }) => ({
   },
 }));
 
-export const Profile = styled(Avatar)(({ theme }) => ({
+export const ProfileBox = styled(Avatar)(({ theme }) => ({
   width: 150,
   height: 150,
   border: `4px solid ${theme.palette.text.primary}`,
+  boxShadow: "1px 1px 10px rgba(0, 0, 0, 0.2)",
+}));
+
+export const Profile = styled(Avatar)(({ theme }) => ({
+  width: 150,
+  height: 150,
+  border: `4px solid #fff`,
   boxShadow: "1px 1px 10px rgba(0, 0, 0, 0.2)",
 }));
 
@@ -59,22 +81,29 @@ export const EditIconContainer = styled(Avatar)(({ theme }) => ({
   position: "absolute",
   height: "40px",
   width: "40px",
-  backgroundColor: "gray",
+  backgroundColor:theme.palette.background.paper,
   borderRadius: "50%",
-  left: "123px",
-  bottom: "97px",
+  left: "110px",
+  top:"82px",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
 
   [theme.breakpoints.down("sm")]: {
-    left: "63%",
-    bottom: "120px",
+    left: "59%",
+    top:"60px"
   },
+}));
+
+export const EditIcons = styled(EditIcon)(({ theme }) => ({
+  height:"30px",
+  width:"30px",
+  color:theme.palette.text.primary
 }));
 
 export const Text = styled(Typography)(({ theme }) => ({
   margin: "0px 10px",
+  color:"#fff",
   [theme.breakpoints.down("sm")]: {
     margin: "10px 0px",
   },

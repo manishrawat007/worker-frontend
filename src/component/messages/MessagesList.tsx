@@ -56,7 +56,7 @@ const MessageList = () => {
                                 </CustomMainCard>
                             </Grid2>
                         )) :
-                            <Grid2 size={{ xs: 12, sm: 12, md: 12, lg: 6 }}>
+                            <Grid2 size={{ xs: 12, sm: 12, md: 12, lg: 12 }}>
                                 <Error>No Message List</Error>
                             </Grid2>
                         }
