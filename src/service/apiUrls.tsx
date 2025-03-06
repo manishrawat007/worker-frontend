@@ -3,7 +3,8 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 
 export const api = axios.create({
-  baseURL: 'http://localhost:7777',
+  // baseURL: 'http://localhost:7777',
+  baseURL: 'https://worker-lytn.onrender.com',
 });
 
 api.interceptors.request.use(
