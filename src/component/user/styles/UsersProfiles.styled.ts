@@ -81,7 +81,13 @@ export const CardContainer = styled(Box)(({ theme }) => ({
     height: "300px",
 }))
 
-export const ImageContainer = styled('img')(({ theme }) => ({
+export const ImageContainer = styled(Box)(({ theme }) => ({
+    height: '250px',
+    objectFit: 'fill',
+    position: "relative"
+}))
+
+export const Image = styled('img')(({ theme }) => ({
     width: '100%',
     height: '250px',
     objectFit: 'fill'
@@ -99,6 +105,23 @@ export const PreviewImageContainer = styled('img')(({ theme }) => ({
     width: '100%',
     height: '500px',
     objectFit: 'fill',
+}))
+
+export const Menu = styled(Box)(({ theme }) => ({
+    position:"absolute",
+    top:"40px",
+    right:"10px",
+    width: "100px",
+    boxShadow: "1px 2px 10 ps #CCC",
+    padding:"10px",
+    borderRadius:"10px",
+    zIndex:1,
+    backgroundColor: theme.palette.background.paper
+}))
+
+export const MenuItem = styled(Typography)(({ theme }) => ({
+    fontSize:"12px",
+    color:theme.palette.text.primary
 }))
 
 

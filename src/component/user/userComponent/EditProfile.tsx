@@ -33,7 +33,7 @@ const EditProfile = () => {
             reset({
                 firstName: userData?.firstName,
                 lastName: userData?.lastName,
-                skills: userData?.skills.flat().join(","),
+                skills: userData?.skills?.flat().join(","),
                 bio: userData?.bio
             })
         }

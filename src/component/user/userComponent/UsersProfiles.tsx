@@ -2,9 +2,10 @@ import { FC, useState } from 'react';
 import { Box, Typography, Grid2 } from '@mui/material';
 import { Dialog, DialogContent } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import { BioText, CardContainer, CustomAvatar, CustomIcon, DetailsContainer, ImageContainer, InnerContainer, InnerPostsContainer, MainContainer, PostsContainer, PreviewImageContainer, ProfileContainer, UserNametext } from '../styles/UsersProfiles.styled';
+import { BioText, CardContainer, CustomAvatar, CustomIcon, DetailsContainer, Image, ImageContainer, InnerContainer, InnerPostsContainer, MainContainer, Menu, MenuItem, PostsContainer, PreviewImageContainer, ProfileContainer, UserNametext } from '../styles/UsersProfiles.styled';
 import { Error } from '../styles/Connections.styled';
 import { Heading, ProfileCard } from '../styles/About.styled';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 export const ProfileHeader: FC<{ user: any }> = ({ user }) => {
   return (
@@ -40,6 +41,7 @@ export const ProfileHeader: FC<{ user: any }> = ({ user }) => {
 
 export const PostList: FC<{ posts: any[] }> = ({ posts }) => {
   const [open, setOpen] = useState(false);
+  const [index, setIndex] = useState<string | null>("-1")
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   const handleImageClick = (image: string) => {
@@ -62,10 +64,19 @@ export const PostList: FC<{ posts: any[] }> = ({ posts }) => {
               <CardContainer
                 onClick={() => handleImageClick(post.image)}
               >
-                <ImageContainer
-                  src={post.image}
-                  alt={post.description}
-                />
+                <ImageContainer>
+                  <Image
+                    src={post.image}
+                    alt={post.description}
+                  />
+                  <CustomIcon onClick={(e) => { setIndex(post.id), e.stopPropagation() }}><MoreVertIcon sx={{ height: "20px", width: "20px" }} /></CustomIcon>
+                  {index == post.id &&
+                    <Menu>
+                      <MenuItem onClick={handleClose}>Archive</MenuItem>
+                      <MenuItem onClick={handleClose}>Delete</MenuItem>
+                    </Menu>
+                  }
+                </ImageContainer>
                 <Typography variant="body2" sx={{ padding: 1 }}>
                   {post.description || ''}
                 </Typography>

@@ -5,7 +5,7 @@ export const Icons = styled(IconButton)(() => ({
     position: "absolute",
     top: 16,
     left: 16,
-    zIndex: 10,
+    zIndex: 999,
 }))
 
 export const MenuBar = styled(MenuIcon)(() => ({

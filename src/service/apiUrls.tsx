@@ -12,12 +12,10 @@ api.interceptors.request.use(
     if (token) {
       config.headers['token'] = token;
     }
-
-    console.log('Request Sent:', config);
     return config;
   },
   (error) => {
-    console.error('Request Error:', error);
+    console.error('Error in the api:', error);
     return Promise.reject(error);
   }
 );
