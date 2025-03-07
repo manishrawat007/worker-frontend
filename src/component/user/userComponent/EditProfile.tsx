@@ -6,6 +6,7 @@ import { editProfile, uploadPost } from "@/service/apiUrls";
 import { useUser } from "../context/UserContext";
 import { ButtonsContainer, ChooseImage, Close, CloseContainer, FormContainer, Heading, InputField, PostContainer, PreviewContainer, PreviewImage, ProfileCard, ResetButton, StyledButton } from "../styles/Edit.styled";
 import { Inputfield } from "@/component/login/Login.styled";
+import { toast } from "react-toastify";
 
 const EditProfile = () => {
     const [error, setError] = useState<String | null>(null)
@@ -46,6 +47,7 @@ const EditProfile = () => {
             bio: formData.bio
         }
         editProfile(payload).then((res) => {
+            toast.success("User details updated successfully")
             setUserData((prev: any) => ({ ...prev, bio: res?.data?.bio, skills: res?.data?.skills }))
             reset({
                 firstName: res?.data?.firstName,
@@ -54,6 +56,7 @@ const EditProfile = () => {
                 bio: res.data.bio
             })
         }).catch((err) => {
+            toast.error(err.response.data)
             setError(err.response.data)
         })
     };
@@ -83,7 +86,9 @@ const EditProfile = () => {
         uploadPost(formData).then((res) => {
             setImage(null);
             setImageUrl(null)
+            toast.success(`Post uploaded successfully`)
         }).catch((err) => {
+            toast.error(`Post is not uploaded`)
             console.log("error----------", err.message)
         })
     };

@@ -9,6 +9,7 @@ import { CoverContainer, EditIconContainer, EditIcons, InsideCover, MainContaine
 import EditProfileDialog from './EditDialog';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { updateProfileAndCoverPic } from '@/service/apiUrls';
+import { toast } from 'react-toastify';
 const EditProfile = lazy(() => import('./EditProfile'))
 const UserList = lazy(() => import('./Follower'))
 const IncomingRequests = lazy(() => import('./Request'))
@@ -57,9 +58,10 @@ export const MyProfile: FC<{ user: any }> = ({ user }) => {
         }
         updateProfileAndCoverPic(formData).then((res) => {
             setUserData((prev: any) => ({ ...prev, profile: res.data.profile, cover: res.data.cover }))
+            toast.success("Profile Updated Successfully")
             handleClose()
         }).catch((err) => {
-            console.log("error----------", err.message)
+            toast.success("Profile is not updated",err.message)
         })
     };
 

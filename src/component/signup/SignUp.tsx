@@ -8,10 +8,10 @@ import { signUp } from "@/service/apiUrls";
 import { FormContainer, Inputfield, StyledButton } from "../login/Login.styled";
 import { ChooseImage } from "../user/styles/Edit.styled";
 import OtpScreen from "./Otp";
+import { toast } from "react-toastify";
 
 const SignUpComponent = () => {
     const [isOtp, setIsOtp] = useState<boolean>(false)
-    const [error, setError] = useState(null)
     const [email,setEmail]=useState("")
 
     const defaultValues = {
@@ -47,9 +47,10 @@ const SignUpComponent = () => {
         formdata.append("coverPic", formData.coverPic?.[0])
         signUp(formdata).then(() => {
             setEmail(formData.email)
+            toast.success(`Otp is sent on your ${formData.email}`)
             setIsOtp(true)
         }).catch((err) => {
-            setError(err.response.data)
+            toast.error(err.response.data)
         })
     };
 
@@ -228,7 +229,6 @@ const SignUpComponent = () => {
                             Register
                         </StyledButton>
                     </form>
-                    {error && <Box sx={{ color: "red", textAlign: "center", margin: "10px 0px" }}>{error}</Box>}
                 </Box> :
                 <OtpScreen email={email}/>}
         </FormContainer>

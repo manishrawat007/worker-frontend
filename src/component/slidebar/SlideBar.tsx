@@ -11,6 +11,7 @@ import DetailsIcon from '@mui/icons-material/Details';
 import { ThemeContext } from "@/styles/ThemeProvider";
 import MessageIcon from '@mui/icons-material/Message';
 import { CustomListItem, CustomListItemText, Icons, MenuBar } from "./SlideBar.styled";
+import { toast } from "react-toastify";
 
 const SideSlideBar = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -31,8 +32,9 @@ const SideSlideBar = () => {
     logout().then((res) => {
       localStorage.setItem('token', "");
       router.push('/')
+      toast.success("Logout successfull")
     }).catch((err) => {
-      console.log('some error in logout', err)
+      toast.error("Logout unsuccessfull")
     })
   }
 

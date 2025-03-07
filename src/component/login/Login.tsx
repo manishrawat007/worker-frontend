@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { Account, Container, InnerComponent, Inputfield, SignupButton, StyledButton, Title } from './Login.styled';
 import { useRouter } from 'next/router';
 import { loginapi } from '@/service/apiUrls';
+import { toast } from 'react-toastify';
 
 export type FormData = {
     email: string;
@@ -16,6 +17,7 @@ const Login = () => {
     // Handle form submission
     const onSubmit = (data: FormData) => {
         loginapi(data).then((res) => {
+            toast.success("Login Successfull")
             localStorage.setItem("token", res?.data?.token);
             router.push('/feeds')
         }).catch((err) => {

@@ -3,6 +3,7 @@ import { Box, TextField, Button, Typography } from "@mui/material";
 import { Inputfield, StyledButton } from "../login/Login.styled";
 import { verifyOtp } from "@/service/apiUrls";
 import { useRouter } from "next/router";
+import { toast } from "react-toastify";
 
 const OtpScreen: React.FC<{ email: string }> = ({ email }) => {
     const [otp, setOtp] = useState(["", "", "", "", "", ""]);
@@ -35,9 +36,10 @@ const OtpScreen: React.FC<{ email: string }> = ({ email }) => {
             email: email
         }
         verifyOtp(payload).then(() => {
+            toast.success("Otp verify successfully")
             router.push('/')
-        }).catch((err) => {
-            console.log("err")
+        }).catch(() => {
+            toast.success("Otp is not verified")
         })
 
     };
