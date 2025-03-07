@@ -20,7 +20,7 @@ const Login = () => {
             toast.success("Login Successfull")
             localStorage.setItem("token", res?.data?.token);
             router.push('/feeds')
-        }).catch((err) => {
+        }).catch(() => {
             toast.error("Invalid Credentials")
         })
     };
