@@ -6,7 +6,6 @@ import DarkModeIcon from '@mui/icons-material/DarkMode';
 import { useRouter } from "next/router";
 import { logout } from "@/service/apiUrls";
 import LogoutIcon from '@mui/icons-material/Logout';
-import Cookies from 'js-cookie';
 import ThemeToggle from "./ThemeToggle";
 import DetailsIcon from '@mui/icons-material/Details';
 import { ThemeContext } from "@/styles/ThemeProvider";
@@ -30,7 +29,7 @@ const SideSlideBar = () => {
 
   const handleLogout = () => {
     logout().then((res) => {
-      Cookies.set('token', "");
+      localStorage.setItem('token', "");
       router.push('/')
     }).catch((err) => {
       console.log('some error in logout', err)

@@ -1,10 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
-import { TextField, Button, Box } from '@mui/material';
 import { Account, Container, InnerComponent, Inputfield, SignupButton, StyledButton, Title } from './Login.styled';
 import { useRouter } from 'next/router';
 import { loginapi } from '@/service/apiUrls';
-// import Cookies from 'js-cookie';
 
 export type FormData = {
     email: string;
@@ -17,7 +15,8 @@ const Login = () => {
 
     // Handle form submission
     const onSubmit = (data: FormData) => {
-        loginapi(data).then(() => {
+        loginapi(data).then((res) => {
+            localStorage.setItem("token", res?.data?.token);
             router.push('/feeds')
         }).catch((err) => {
             console.log('err------', err)

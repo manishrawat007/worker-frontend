@@ -1,7 +1,6 @@
 import Login from "@/component/login/Login";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import Cookies from "js-cookie";
 
 export default function Home() {
   const router = useRouter();
@@ -9,7 +8,7 @@ export default function Home() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    const token = Cookies.get("token");
+    const token = localStorage.getItem("token")
     if (token) {
       setIsAuthenticated(true);
       router.push("/feeds");
@@ -17,7 +16,7 @@ export default function Home() {
       setIsAuthenticated(false);
     }
     setLoading(false);
-  }, [router]);
+  }, []);
 
   if (loading) {
     return null;

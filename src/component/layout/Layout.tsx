@@ -1,7 +1,6 @@
 import { useRouter } from "next/router";
 import SideSlideBar from "../slidebar/SlideBar";
 import { useEffect, useState } from "react";
-import Cookies from "js-cookie";
 import { Box } from "@mui/material";
 
 const Layout = ({ children }: any) => {
@@ -9,7 +8,7 @@ const Layout = ({ children }: any) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    const token = Cookies.get("token");
+    const token = localStorage.getItem("token")
     if (token) {
       setIsAuthenticated(true);
     } else {
