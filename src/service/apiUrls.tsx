@@ -27,7 +27,7 @@ export const loginapi = (payload: FormData) => {
 }
 
 export const signUp = (payload: any) => {
-  return axios.post('http://localhost:7777/signup', payload)
+  return axios.post('https://worker-lytn.onrender.com/signup', payload)
 }
 
 export const feeds = (page: number) => {
