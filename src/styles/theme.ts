@@ -3,10 +3,11 @@ import { createTheme } from "@mui/material/styles";
 export const lightTheme = createTheme({
   palette: {
     mode: "light",
-    primary: { main: "#007bff" },
-    secondary:{main:"#858894"},
-    background: { default: "#F5F5DC", paper: "#f5e0df" },
-    text: { primary: "#333", secondary: "#555" },
+    primary: { main: "#f77420" },
+    secondary:{main:"#f28c4b"},
+    background: { default: "#FFF", paper: "#F5F5DC" },
+    text: { primary: "#333", secondary: "#b5b0b0" },
+    common:{white:"#fff"}
   },
   typography :{
     fontFamily: "montserrat",
@@ -20,10 +21,11 @@ export const lightTheme = createTheme({
 export const darkTheme = createTheme({
   palette: {
     mode: "dark",
-    secondary:{main:"#68646b"}, 
-    primary: { main: "#90caf9" },
+    primary:{main:"#9004c7"}, 
+    secondary: { main: "#b036e0" },
     background: { default: "#1C1C1C", paper: "#383838" },
     text: { primary: "#ffffff", secondary: "#aaaaaa" },
+    common:{white:"#fff"}
   },
   typography :{
     fontFamily: "montserrat",

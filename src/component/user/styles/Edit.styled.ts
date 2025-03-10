@@ -83,6 +83,9 @@ export const PreviewContainer = styled(Box)(({ theme }) => ({
     position: "relative",
     width:"50%",
     height:"400px",
+    "&:hover": {
+        filter: "brightness(0.7)",
+    },
 
     [theme.breakpoints.down("md")]: {
         width:"100%",

@@ -5,14 +5,18 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { Grid2 } from "@mui/material";
 import { signUp } from "@/service/apiUrls";
-import { FormContainer, Inputfield, StyledButton } from "../login/Login.styled";
-import { ChooseImage } from "../user/styles/Edit.styled";
+import { Account, FormContainer, Inputfield, PreviewContainer, SignupButton, StyledButton } from "../login/Login.styled";
+import { ChooseImage, Close, CloseContainer, PreviewImage } from "../user/styles/Edit.styled";
 import OtpScreen from "./Otp";
 import { toast } from "react-toastify";
+import { useRouter } from "next/router";
 
 const SignUpComponent = () => {
     const [isOtp, setIsOtp] = useState<boolean>(false)
-    const [email,setEmail]=useState("")
+    const [email, setEmail] = useState("")
+    const [imageUrl, setImageUrl] = useState("")
+    const [imageUrl1, setImageUrl1] = useState("")
+    const router = useRouter()
 
     const defaultValues = {
         firstName: "",
@@ -59,7 +63,7 @@ const SignUpComponent = () => {
             {!isOtp ?
                 <Box>
                     <Typography variant="h5" textAlign="center" marginBottom={2}>
-                        Register your Details
+                        Join thousands of singles looking for real connections
                     </Typography>
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <Grid2 container spacing={2}>
@@ -174,49 +178,79 @@ const SignUpComponent = () => {
                             </Grid2>
 
                             <Grid2 size={{ xs: 12, sm: 6, md: 4, lg: 4 }}>
-                                <Box sx={{ textAlign: "center" }}>
-                                    <Inputfield
-                                        type="file"
-                                        id="upload-button"
-                                        style={{ display: "none" }}
-                                        {...register("profilePic", { required: "Profile picture is required" })}
-                                        error={!!errors.profilePic}
-                                        helperText={errors.profilePic?.message}
-                                    />
-                                    <label htmlFor="upload-button">
-                                        <ChooseImage>
-                                            Upload Profile picture
-                                        </ChooseImage>
-                                    </label>
-                                    {errors.profilePic && (
-                                        <Typography sx={{ color: "red", mt: 1, fontSize: "12px", textAlign: "left" }}>
-                                            {errors.profilePic.message}
-                                        </Typography>
-                                    )}
-                                </Box>
+                                {!imageUrl ?
+                                    <Box sx={{ textAlign: "center" }}>
+                                        <Inputfield
+                                            type="file"
+                                            id="upload-button"
+                                            style={{ display: "none" }}
+                                            {...register("profilePic", { required: "Profile picture is required" })}
+                                            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                                                const file = event.target.files?.[0];
+                                                if (file) {
+                                                    setImageUrl(URL.createObjectURL(file));
+                                                }
+                                            }}
+                                            error={!!errors.profilePic}
+                                            helperText={errors.profilePic?.message}
+                                        />
+                                        <label htmlFor="upload-button">
+                                            <ChooseImage>
+                                                Upload Profile picture
+                                            </ChooseImage>
+                                        </label>
+                                        {errors.profilePic && (
+                                            <Typography sx={{ color: "red", mt: 1, fontSize: "12px", textAlign: "left" }}>
+                                                {errors.profilePic.message}
+                                            </Typography>
+                                        )}
+                                    </Box>
+                                    :
+                                    <PreviewContainer>
+                                        <PreviewImage src={imageUrl} alt="Uploaded Image" />
+                                        <CloseContainer onClick={() => setImageUrl('')}>
+                                            <Close />
+                                        </CloseContainer>
+                                    </PreviewContainer>
+                                }
                             </Grid2>
 
                             <Grid2 size={{ xs: 12, sm: 6, md: 8, lg: 8 }}>
-                                <Box sx={{ textAlign: "center" }}>
-                                    <Inputfield
-                                        type="file"
-                                        id="cover-button"
-                                        style={{ display: "none" }}
-                                        {...register("coverPic", { required: "Cover picture is required" })}
-                                        error={!!errors.coverPic}
-                                        helperText={errors.coverPic?.message}
-                                    />
-                                    <label htmlFor="cover-button">
-                                        <ChooseImage>
-                                            Upload Cover picture
-                                        </ChooseImage>
-                                    </label>
-                                    {errors.coverPic && (
-                                        <Typography sx={{ color: "red", mt: 1, fontSize: "12px", textAlign: "left" }}>
-                                            {errors.coverPic.message}
-                                        </Typography>
-                                    )}
-                                </Box>
+                                {!imageUrl1 ?
+                                    <Box sx={{ textAlign: "center" }}>
+                                        <Inputfield
+                                            type="file"
+                                            id="cover-button"
+                                            style={{ display: "none" }}
+                                            {...register("coverPic", { required: "Cover picture is required" })}
+                                            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                                                const file = event.target.files?.[0];
+                                                if (file) {
+                                                    setImageUrl1(URL.createObjectURL(file));
+                                                }
+                                            }}
+                                            error={!!errors.coverPic}
+                                            helperText={errors.coverPic?.message}
+                                        />
+                                        <label htmlFor="cover-button">
+                                            <ChooseImage>
+                                                Upload Cover picture
+                                            </ChooseImage>
+                                        </label>
+                                        {errors.coverPic && (
+                                            <Typography sx={{ color: "red", mt: 1, fontSize: "12px", textAlign: "left" }}>
+                                                {errors.coverPic.message}
+                                            </Typography>
+                                        )}
+                                    </Box>
+                                    :
+                                    <PreviewContainer>
+                                        <PreviewImage src={imageUrl1} alt="Uploaded Image" />
+                                        <CloseContainer onClick={() => setImageUrl1('')}>
+                                            <Close />
+                                        </CloseContainer>
+                                    </PreviewContainer>
+                                }
                             </Grid2>
                         </Grid2>
 
@@ -226,11 +260,12 @@ const SignUpComponent = () => {
                             color="primary"
                             fullWidth
                         >
-                            Register
+                            Find Your Match
                         </StyledButton>
                     </form>
+                        <Account onClick={() => router.push('/')}>Already have an account?<SignupButton> Log in.</SignupButton></Account>
                 </Box> :
-                <OtpScreen email={email}/>}
+                <OtpScreen email={email} />}
         </FormContainer>
     );
 };

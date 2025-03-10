@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import { Box, Typography, Grid2 } from '@mui/material';
 import { Dialog, DialogContent } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
@@ -43,6 +43,7 @@ export const PostList: FC<{ posts: any[] }> = ({ posts }) => {
   const [open, setOpen] = useState(false);
   const [index, setIndex] = useState<string | null>("-1")
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const menuRef = useRef<HTMLDivElement | null>(null);
 
   const handleImageClick = (image: string) => {
     setSelectedImage(image);
@@ -53,6 +54,16 @@ export const PostList: FC<{ posts: any[] }> = ({ posts }) => {
     setOpen(false);
     setSelectedImage(null);
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        handleClose();
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
     <Box sx={{ padding: 2 }}>
@@ -69,9 +80,9 @@ export const PostList: FC<{ posts: any[] }> = ({ posts }) => {
                     src={post.image}
                     alt={post.description}
                   />
-                  <CustomIcon onClick={(e) => { setIndex(post.id), e.stopPropagation() }}><MoreVertIcon sx={{ height: "20px", width: "20px" }} /></CustomIcon>
+                  <CustomIcon onClick={(e) => { setIndex((prev)=>prev==post.id ? "0" : post.id), e.stopPropagation() }}><MoreVertIcon sx={{ height: "20px", width: "20px" }} /></CustomIcon>
                   {index == post.id &&
-                    <Menu>
+                    <Menu ref={menuRef}>
                       <MenuItem onClick={handleClose}>Archive</MenuItem>
                       <MenuItem onClick={handleClose}>Delete</MenuItem>
                     </Menu>
