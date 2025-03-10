@@ -8,6 +8,7 @@ export const Container = styled(Box)(({ theme }) => ({
     backgroundColor: theme.palette.background.default,
     padding: "20px",
     borderRadius: "8px",
+    margin:"60px 20px",
     boxShadow: "1px 2px 5px gray",
     [theme.breakpoints.down("sm")]: {
         padding:"10px",
@@ -15,7 +16,6 @@ export const Container = styled(Box)(({ theme }) => ({
 }))
 
 export const Heading = styled(Typography)(({ theme }) => ({
-    marginTop: '20px',
     color: theme.palette.text.primary,
 }))
 

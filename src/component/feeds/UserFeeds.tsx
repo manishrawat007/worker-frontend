@@ -94,7 +94,7 @@ export const UserFeeds = () => {
                                 image="/images/duumy_user.jpg"
                                 title="No Data Found"
                             />
-                            <ProfileName>No Data Found</ProfileName>
+                            <ProfileName>No Users Found</ProfileName>
                         </MediaContainer>
                     </ProfileCard>
                     <CardContent>

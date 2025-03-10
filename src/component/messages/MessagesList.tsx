@@ -5,6 +5,7 @@ import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import { userMessagesList } from "@/service/apiUrls"
 import Loader from "@/custom/loader/Loader"
+import { Inputfield } from "../login/Login.styled"
 
 const MessageList = () => {
     const router = useRouter()
@@ -23,9 +24,16 @@ const MessageList = () => {
     }
     return (
         <>
-            <Container sx={{ m: 3 }}>
+            <Container>
                 <Heading variant="h5">Messages</Heading>
                 <ProfileCard >
+                    <Inputfield
+                        label="Start a new Conversation"
+                        type="text"
+                        fullWidth
+                        onChange={()=>{}}
+                        margin="normal"
+                    />
                     <Grid2 container spacing={2}>
                         {users.length > 0 ? users?.map((user) => (
                             <Grid2 size={{ xs: 12, sm: 12, md: 12, lg: 6 }} key={user._id} onClick={(e) => {
@@ -57,7 +65,7 @@ const MessageList = () => {
                             </Grid2>
                         )) :
                             <Grid2 size={{ xs: 12, sm: 12, md: 12, lg: 12 }}>
-                                <Error>No Message List</Error>
+                                <Heading variant="h6">No messages yet! Start a conversation and make a connection.</Heading>
                             </Grid2>
                         }
                     </Grid2>
