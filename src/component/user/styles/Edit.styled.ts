@@ -56,12 +56,9 @@ export const InputField = styled(TextField)(({ theme }) => ({
 
 export const StyledButton = styled(Button)(({ theme }) => ({
     margin: "15px 0px",
-    backgroundColor: "#007bff",
-    "&:hover": {
-        backgroundColor: "#0056b3",
-    },
+    backgroundColor: theme.palette.primary.main,
     fontSize: 4 * theme.typography.fontSize,
-    color: theme.palette.text.primary,
+    color: theme.palette.common.white,
     textTransform:"none"
 }))
 
@@ -127,12 +124,9 @@ export const Close = styled(CloseIcon)(({ theme }) => ({
 
 
 export const ResetButton = styled(Button)(({ theme }) => ({
-    backgroundColor: "#007bff",
-    "&:hover": {
-        backgroundColor: "#0056b3",
-    },
+    backgroundColor: theme.palette.primary.main,
     fontSize: 4 * theme.typography.fontSize,
-    color: theme.palette.text.primary,
+    color: theme.palette.common.white,
     width: "100%",
     border: "none",
     textTransform:"none"
@@ -140,9 +134,10 @@ export const ResetButton = styled(Button)(({ theme }) => ({
 
 export const ChooseImage = styled(Box)(({ theme }) => ({
     padding: "20px",
-    border: "2px dotted gray",
+    border: `2px dotted ${theme.palette.primary.main}`,
     fontSize: 4 * theme.typography.fontSize,
     width: "100%",
     fontWeight: 700,
-    cursor: "pointer"
+    cursor: "pointer",
+    color:theme.palette.text.primary
 }))

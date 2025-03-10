@@ -7,7 +7,6 @@ import AboutUser from './About';
 import { useUser } from '../context/UserContext';
 import { CoverContainer, EditIconContainer, EditIcons, InsideCover, MainContainer, MoreIconContainer, Profile, ProfileContainer, TabButton, TabListContainer, TabpanelContainer, Tabs, Text } from '../styles/Myprofile.styled';
 import EditProfileDialog from './EditDialog';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { updateProfileAndCoverPic } from '@/service/apiUrls';
 import { toast } from 'react-toastify';
 const EditProfile = lazy(() => import('./EditProfile'))

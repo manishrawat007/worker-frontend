@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Box, Drawer, List, ListItem } from "@mui/material";
+import { Box, Drawer, List } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import ContrastIcon from '@mui/icons-material/Contrast';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
@@ -10,7 +10,7 @@ import ThemeToggle from "./ThemeToggle";
 import DetailsIcon from '@mui/icons-material/Details';
 import { ThemeContext } from "@/styles/ThemeProvider";
 import MessageIcon from '@mui/icons-material/Message';
-import { CustomListItem, CustomListItemText, Icons, MenuBar } from "./SlideBar.styled";
+import { CustomList, CustomListItem, CustomListItemText, Icons, MenuBar } from "./SlideBar.styled";
 import { toast } from "react-toastify";
 
 const SideSlideBar = () => {
@@ -54,36 +54,36 @@ const SideSlideBar = () => {
           onKeyDown={toggleDrawer(false)}
         >
           <List style={{ cursor: "pointer" }}>
-            <ListItem onClick={() => router.push('/feeds')}>
-              <CustomListItem>
+            <CustomList onClick={() => router.push('/feeds')}>
+              <CustomListItem dark={darkMode}>
                 <HomeIcon />
               </CustomListItem>
               <CustomListItemText primary="Home" />
-            </ListItem>
-            <ListItem onClick={() => { router.push('/user/profile') }}>
-              <CustomListItem>
-                <DetailsIcon />
-              </CustomListItem>
-              <CustomListItemText primary="Details" />
-            </ListItem>
-            <ListItem>
-              <CustomListItem>
-                {darkMode ? <DarkModeIcon /> : <ContrastIcon />}
-              </CustomListItem>
-              <ThemeToggle />
-            </ListItem>
-            <ListItem onClick={() => { router.push('/messages')}}>
-              <CustomListItem>
+            </CustomList>
+            <CustomList onClick={() => { router.push('/messages') }}>
+              <CustomListItem dark={darkMode}>
                 <MessageIcon />
               </CustomListItem>
               <CustomListItemText primary="Messages" />
-            </ListItem>
-            <ListItem onClick={handleLogout}>
-              <CustomListItem>
+            </CustomList>
+            <CustomList onClick={() => { router.push('/user/profile') }}>
+              <CustomListItem dark={darkMode}>
+                <DetailsIcon />
+              </CustomListItem>
+              <CustomListItemText primary="Details" />
+            </CustomList>
+            <CustomList>
+              <CustomListItem dark={darkMode}>
+                {darkMode ? <DarkModeIcon /> : <ContrastIcon />}
+              </CustomListItem>
+              <ThemeToggle />
+            </CustomList>
+            <CustomList onClick={handleLogout}>
+              <CustomListItem dark={darkMode}>
                 <LogoutIcon />
               </CustomListItem>
               <CustomListItemText primary="Logout" />
-            </ListItem>
+            </CustomList>
           </List>
         </Box>
       </Drawer>

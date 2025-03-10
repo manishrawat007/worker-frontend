@@ -61,7 +61,7 @@ export const ButtonContainer = styled(Box)(({theme}) => ({
 }))
 
 export const Accept = styled(Button)(({ theme }) => ({
-    backgroundColor: "#4caf50",
+    backgroundColor: theme.palette.primary.main,
     color: "#fff",
     fontSize: 4 * theme.typography.fontSize,
     textAlign:"left",

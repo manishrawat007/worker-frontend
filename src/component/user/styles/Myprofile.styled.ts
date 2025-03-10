@@ -16,7 +16,7 @@ export const CoverContainer = styled(Box)<{ bgImage?: string }>(({bgImage}) => (
   position: 'relative',
   width: '100%',
   height: '300px',
-  backgroundImage: `url(${bgImage})`,
+  backgroundImage: bgImage ? `url(${bgImage})` : '/images/duumy_user.jpg',
   backgroundSize: 'cover',
   backgroundPosition: 'center',
 }))

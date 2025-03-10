@@ -152,7 +152,6 @@ const EditProfile = () => {
                     <StyledButton
                         type="submit"
                         variant="contained"
-                        color="primary"
                         fullWidth
                     >
                         Edit Details
