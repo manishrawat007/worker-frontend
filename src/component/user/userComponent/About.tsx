@@ -3,7 +3,7 @@ import useFetch from "@/custom/api/Fetch"
 import { getUsersDetails } from "@/service/apiUrls"
 import { Post } from "@/pages/user/[id]"
 import React from "react";
-import { Box, Typography, Grid2, Chip, Stack } from "@mui/material";
+import { Grid2, Stack } from "@mui/material";
 import { useUser } from "../context/UserContext"
 import { PostList } from "./UsersProfiles";
 import { CustomChip, Heading, HighlightText, ProfileCard, SkillsContainer, Text, UserDetailsBox } from "../styles/About.styled";

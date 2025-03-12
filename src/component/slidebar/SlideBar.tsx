@@ -58,13 +58,25 @@ const SideSlideBar = () => {
               <CustomListItem dark={darkMode}>
                 <HomeIcon />
               </CustomListItem>
-              <CustomListItemText primary="Home" />
+              <CustomListItemText primary="Feeds" />
             </CustomList>
             <CustomList onClick={() => { router.push('/messages') }}>
               <CustomListItem dark={darkMode}>
                 <MessageIcon />
               </CustomListItem>
               <CustomListItemText primary="Messages" />
+            </CustomList>
+            <CustomList onClick={() => { router.push('/connections') }}>
+              <CustomListItem dark={darkMode}>
+                <MessageIcon />
+              </CustomListItem>
+              <CustomListItemText primary="Connections" />
+            </CustomList>
+            <CustomList onClick={() => { router.push('/requests') }}>
+              <CustomListItem dark={darkMode}>
+                <MessageIcon />
+              </CustomListItem>
+              <CustomListItemText primary="Requests" />
             </CustomList>
             <CustomList onClick={() => { router.push('/user/profile') }}>
               <CustomListItem dark={darkMode}>

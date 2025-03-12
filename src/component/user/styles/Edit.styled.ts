@@ -1,12 +1,15 @@
-import { Avatar, Box, Button, styled, TextField, Typography } from "@mui/material";
+import { Box, Button, styled, TextField, Typography } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
-import { Padding } from "@mui/icons-material";
 
 export const FormContainer = styled(Box)(({ theme }) => ({
-    padding: "20px",
-    boxShadow: "1px 2px 5px gray",
-    borderRadius: "8px",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    overflow: "auto",
     backgroundColor: theme.palette.background.default,
+    padding: "20px",
+    borderRadius: "8px",
+    boxShadow: "1px 2px 5px gray",
     [theme.breakpoints.down("sm")]: {
         padding:"10px",
     }

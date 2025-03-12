@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import CardContent from "@mui/material/CardContent";
 import useFetch from "@/custom/api/Fetch";
 import Loader from "@/custom/loader/Loader";
-import Slide from "@mui/material/Slide"; // Import MUI Slide
+import Slide from "@mui/material/Slide";
 import {
     Container,
     CustomActions,

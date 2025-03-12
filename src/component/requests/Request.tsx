@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Avatar, Box, Button, Card, Grid2, List, ListItem, ListItemAvatar, ListItemText, Typography } from "@mui/material";
+import { Avatar, Card, Grid2, List, ListItemAvatar } from "@mui/material";
 import { AcceptRejectRequest, pendingRequest } from "@/service/apiUrls";
 import { useRouter } from "next/router";
-import { Accept, ButtonContainer, Container, CustomListItem, Heading, ProfileCard, Reject, RequestContainer, RequestText } from "../styles/Request.styled";
-import { Error } from "../styles/Connections.styled";
+import { Accept, ButtonContainer, Container, CustomListItem, Heading, ProfileCard, Reject, RequestContainer, RequestText } from "./Request.styled";
+import { Error } from "../connections/Connections.styled";
 import Loader from "@/custom/loader/Loader";
 
 interface Requests {

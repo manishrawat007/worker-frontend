@@ -123,9 +123,9 @@ export const ImageContainer = styled(Button)(() => ({
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
     transition: "transform 0.5s ease-in-out, filter 0.3s ease-in-out",
-
+    filter: " blur(4px)",
     "&:hover": {
-        filter: "brightness(0.8)",
+        filter: "blur(4px) brightness(1.3)",
     },
 }));
 

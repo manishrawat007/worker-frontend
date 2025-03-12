@@ -91,11 +91,11 @@ const Login = () => {
                             variant="contained"
                             fullWidth
                             disabled={loading}>
-                            Login
+                            Find Your Match
                         </StyledButton>
                     </InnerComponent>
                     <AccountContainer>
-                        <Account onClick={() => router.push('/signup')}>Love is just a click away!<SignupButton> Sign in now.</SignupButton></Account>
+                        <Account onClick={() => router.push('/signup')}>Love is just a click away!<SignupButton> Sign up now.</SignupButton></Account>
                     </AccountContainer>
                 </Container>
             </Grid2>

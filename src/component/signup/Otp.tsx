@@ -45,28 +45,31 @@ const OtpScreen: React.FC<{ email: string }> = ({ email }) => {
     };
 
     return (
-        <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" gap={2}>
-            <Typography variant="h5">Enter OTP send on your register email.</Typography>
-            <Box display="flex" gap={1}>
-                {otp.map((digit, index) => (
-                    <Inputfield
-                        key={index}
-                        value={digit}
-                        onChange={(e) => handleChange(index, e.target.value)}
-                        onKeyDown={(e) => handleKeyDown(index, e)}
-                        inputRef={(el) => (inputRefs.current[index] = el)}
-                        variant="outlined"
-                        size="small"
-                        inputProps={{
-                            maxLength: 1,
-                            style: { textAlign: "center", fontSize: 20, width: "40px" },
-                        }}
-                    />
-                ))}
+        <Box>
+            <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" gap={2}>
+                <Typography variant="h5">Enter OTP send on your register email.</Typography>
+                <Box>
+                    {otp.map((digit, index) => (
+                        <Inputfield
+                            key={index}
+                            value={digit}
+                            onChange={(e) => handleChange(index, e.target.value)}
+                            onKeyDown={(e) => handleKeyDown(index, e)}
+                            inputRef={(el) => (inputRefs.current[index] = el)}
+                            variant="outlined"
+                            size="small"
+                            sx={{marginRight:"10px", marginTop:"5px"}}
+                            inputProps={{
+                                maxLength: 1,
+                                style: { textAlign: "center", width: "40px" },
+                            }}
+                        />
+                    ))}
+                </Box>
+                <StyledButton color="primary" onClick={handleSubmit}>
+                    Verify OTP
+                </StyledButton>
             </Box>
-            <StyledButton color="primary" onClick={handleSubmit}>
-                Verify OTP
-            </StyledButton>
         </Box>
     );
 };

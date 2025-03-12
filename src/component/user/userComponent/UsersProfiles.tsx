@@ -3,7 +3,7 @@ import { Box, Typography, Grid2 } from '@mui/material';
 import { Dialog, DialogContent } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { BioText, CardContainer, CustomAvatar, CustomIcon, DetailsContainer, Image, ImageContainer, InnerContainer, InnerPostsContainer, MainContainer, Menu, MenuItem, PostsContainer, PreviewImageContainer, ProfileContainer, UserNametext } from '../styles/UsersProfiles.styled';
-import { Error } from '../styles/Connections.styled';
+import { Error } from '../../connections/Connections.styled';
 import { Heading, ProfileCard } from '../styles/About.styled';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 

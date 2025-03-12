@@ -1,6 +1,6 @@
 import { Avatar, CardContent, CardMedia, Grid2 } from "@mui/material"
-import { Container, CustomCard, CustomMainCard, CustomText, Error, Heading, ProfileCard } from "../user/styles/Connections.styled"
-import { Accept } from "../user/styles/Request.styled"
+import { Container, CustomCard, CustomMainCard, CustomText, Error, Heading, ProfileCard } from "../connections/Connections.styled"
+import { Accept } from "../requests/Request.styled"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import { userMessagesList } from "@/service/apiUrls"

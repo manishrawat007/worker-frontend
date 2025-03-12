@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Box, Card, CardContent, CardMedia, Avatar } from "@mui/material";
+import { CardContent, CardMedia, Avatar } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import { getfollowers } from "@/service/apiUrls";
 import { useRouter } from "next/router";
-import { Container, CustomCard, CustomMainCard, CustomText, Error, Heading } from "../styles/Connections.styled";
-import { ProfileCard } from "../styles/About.styled";
-import { Accept } from "../styles/Request.styled";
+import { Container, CustomCard, CustomMainCard, CustomText, Error, Heading } from "./Connections.styled";
+import { ProfileCard } from "../user/styles/About.styled";
+import { Accept } from "../requests/Request.styled";
 import Loader from "@/custom/loader/Loader";
 
 interface FollowersTypes {

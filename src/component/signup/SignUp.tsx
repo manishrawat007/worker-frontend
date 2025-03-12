@@ -260,7 +260,7 @@ const SignUpComponent = () => {
                             color="primary"
                             fullWidth
                         >
-                            Find Your Match
+                            Register Your Details
                         </StyledButton>
                     </form>
                         <Account onClick={() => router.push('/')}>Already have an account?<SignupButton> Log in.</SignupButton></Account>

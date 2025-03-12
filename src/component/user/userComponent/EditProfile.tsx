@@ -2,18 +2,28 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Box from "@mui/material/Box";
 import { Grid2 } from "@mui/material";
-import { editProfile, uploadPost } from "@/service/apiUrls";
+import { editProfile } from "@/service/apiUrls";
 import { useUser } from "../context/UserContext";
-import { ButtonsContainer, ChooseImage, Close, CloseContainer, FormContainer, Heading, InputField, PostContainer, PreviewContainer, PreviewImage, ProfileCard, ResetButton, StyledButton } from "../styles/Edit.styled";
-import { Inputfield } from "@/component/login/Login.styled";
+import { FormContainer, Heading, ProfileCard, StyledButton } from "../styles/Edit.styled";
 import { toast } from "react-toastify";
+import { Inputfield } from "@/component/login/Login.styled";
+
+type EditFormFields = {
+    firstName: string;
+    lastName: string;
+    skills: string;
+    bio: string;
+};
+
+type PasswordFormFields = {
+    currentPassword: string;
+    newPassword: string;
+    verifyNewPassword: string;
+};
 
 const EditProfile = () => {
     const [error, setError] = useState<String | null>(null)
     const { userData, setUserData } = useUser()
-    const [image, setImage] = useState<File | null>(null);
-    const [imageUrl, setImageUrl] = useState<string | null>(null);
-    const [message, setMessage] = useState<string>('Image');
 
     const defaultValues = {
         firstName: "",
@@ -22,12 +32,25 @@ const EditProfile = () => {
         bio: "",
     };
 
+    const passwordDefaultValues = {
+        currentPassword: "",
+        newPassword: "",
+        verifyNewPassword: "",
+    };
+
+    const {
+        register: passwordRegister,
+        handleSubmit: passwordhandleSubmit,
+        formState: { errors: passwordErrors },
+        watch
+    } = useForm<PasswordFormFields>({ defaultValues: passwordDefaultValues });
+
     const {
         register,
         handleSubmit,
         formState: { errors },
         reset
-    } = useForm({ defaultValues });
+    } = useForm<EditFormFields>({ defaultValues });
 
     useEffect(() => {
         if (userData) {
@@ -61,37 +84,8 @@ const EditProfile = () => {
         })
     };
 
-    const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files?.[0];
-        if (file) {
-            const url = URL?.createObjectURL(file)
-            setImage(file);
-            setImageUrl(url)
-        }
-    };
-
-    const handleReset = () => {
-        setImage(null)
-        setImageUrl(null)
+    const onPasswordSubmit = (formData: any) => {
     }
-
-    const handleUpload = () => {
-        let formData = new FormData()
-        if (image instanceof File) {
-            formData.append("image", image);
-        }
-        if (typeof message === "string") {
-            formData.append("message", message);
-        }
-        uploadPost(formData).then((res) => {
-            setImage(null);
-            setImageUrl(null)
-            toast.success(`Post uploaded successfully`)
-        }).catch((err) => {
-            toast.error(`Post is not uploaded`)
-            console.log("error----------", err.message)
-        })
-    };
 
     return (
         <FormContainer>
@@ -100,7 +94,7 @@ const EditProfile = () => {
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <Grid2 container spacing={2}>
                         <Grid2 size={{ xs: 12, sm: 6, md: 4, lg: 4 }}>
-                            <InputField
+                            <Inputfield
                                 label="FirstName"
                                 fullWidth
                                 margin="normal"
@@ -112,7 +106,7 @@ const EditProfile = () => {
                             />
                         </Grid2>
                         <Grid2 size={{ xs: 12, sm: 6, md: 4, lg: 4 }}>
-                            <InputField
+                            <Inputfield
                                 label="Last Name"
                                 fullWidth
                                 margin="normal"
@@ -124,7 +118,7 @@ const EditProfile = () => {
                             />
                         </Grid2>
                         <Grid2 size={{ xs: 12, sm: 6, md: 4, lg: 4 }}>
-                            <InputField
+                            <Inputfield
                                 label="Skills"
                                 fullWidth
                                 margin="normal"
@@ -136,7 +130,7 @@ const EditProfile = () => {
                         </Grid2>
 
                         <Grid2 size={{ xs: 12, sm: 6, md: 8, lg: 8 }}>
-                            <InputField
+                            <Inputfield
                                 label="Bio"
                                 fullWidth
                                 margin="normal"
@@ -159,46 +153,68 @@ const EditProfile = () => {
                 </form>
                 {error && <Box sx={{ color: "red", textAlign: "center" }}>{error}</Box>}
             </ProfileCard>
-            <Heading variant="h5">Upload a Post</Heading>
+            <Heading variant="h5">Change Password</Heading>
             <ProfileCard >
-                {imageUrl ? (
-                    <PostContainer>
-                        <PreviewContainer>
-                            <PreviewImage src={imageUrl} alt="Uploaded Image" />
-                            <CloseContainer onClick={handleReset}>
-                                <Close />
-                            </CloseContainer>
-                        </PreviewContainer>
-                        <ButtonsContainer>
+                <form onSubmit={passwordhandleSubmit(onPasswordSubmit)}>
+                    <Grid2 container spacing={2}>
+                        <Grid2 size={{ xs: 12, sm: 6, md: 6, lg: 6 }}>
                             <Inputfield
-                                label="Message"
+                                label="Old Password"
+                                type="text"
+                                fullWidth
+                                margin="normal"
+                                {...passwordRegister("currentPassword", { required: "Old Password is required" })}
+                                error={!!passwordErrors.currentPassword}
+                                helperText={passwordErrors.currentPassword?.message}
+                                InputLabelProps={{ shrink: true }}
+                            />
+                        </Grid2>
+
+                        <Grid2 size={{ xs: 12, sm: 6, md: 6, lg: 6 }}>
+                            <Inputfield
+                                label="New Password"
+                                type="text"
+                                fullWidth
+                                margin="normal"
+                                {...passwordRegister("newPassword", {
+                                    required: "New Password is required",
+                                    pattern: {
+                                        value: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                                        message:
+                                            "Password must include at least one uppercase letter, one lowercase letter, one number, and one special character",
+                                    }
+                                })}
+                                error={!!passwordErrors.newPassword}
+                                helperText={passwordErrors.newPassword?.message}
+                                InputLabelProps={{ shrink: true }}
+                            />
+                        </Grid2>
+
+                        <Grid2 size={{ xs: 12, sm: 6, md: 6, lg: 6 }}>
+                            <Inputfield
+                                label="Verify New Password"
+                                type="text"
                                 fullWidth
                                 margin="normal"
                                 rows={4}
-                                value={message}
-                                onChange={(e) => setMessage(e.target.value)}
+                                {...passwordRegister("verifyNewPassword", {
+                                    required: "Verify New Password is required",
+                                    validate: (value) => value === watch("newPassword") || "Password is not matched",
+                                })}
+                                error={!!passwordErrors.verifyNewPassword}
+                                helperText={passwordErrors.verifyNewPassword?.message}
                                 InputLabelProps={{ shrink: true }}
                             />
-                            <ResetButton onClick={handleUpload} variant="outlined">
-                                Upload Post
-                            </ResetButton>
-                        </ButtonsContainer>
-                    </PostContainer>
-                ) : (
-                    <Box sx={{ textAlign: "center", padding: 2 }}>
-                        <input
-                            accept="image/*"
-                            type="file"
-                            id="upload-button"
-                            style={{ display: "none" }}
-                            onChange={handleImageChange}
-                        />
-                        <label htmlFor="upload-button">
-                            <ChooseImage>
-                                Upload a Post
-                            </ChooseImage>
-                        </label>
-                    </Box>)}
+                        </Grid2>
+                    </Grid2>
+                    <StyledButton
+                        type="submit"
+                        variant="contained"
+                        fullWidth
+                    >
+                        Change Password
+                    </StyledButton>
+                </form>
             </ProfileCard>
         </FormContainer>
     );
