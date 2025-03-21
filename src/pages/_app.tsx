@@ -10,11 +10,9 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <ThemeContextProvider>
-        <UserContext>
           <ToastContainer position="top-right" autoClose={2000} toastStyle={{ fontSize: "18px" }} />
           <CssBaseline />
           <Component {...pageProps} />
-        </UserContext>
       </ThemeContextProvider>
     </>
   )

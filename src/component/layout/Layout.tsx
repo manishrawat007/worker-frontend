@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import SideSlideBar from "../slidebar/SlideBar";
 import { useEffect, useState } from "react";
 import { Box } from "@mui/material";
+import { UserContext } from "../user/context/UserContext";
 
 const Layout = ({ children }: any) => {
   const router = useRouter();
@@ -21,10 +22,10 @@ const Layout = ({ children }: any) => {
   }
 
   return (
-    <Box >
+    <UserContext>
       <SideSlideBar />
       <Box>{children}</Box>
-    </Box>
+    </UserContext>
   );
 };
 

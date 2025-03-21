@@ -84,7 +84,7 @@ export const UserFeeds = () => {
         return <Loader />;
     }
 
-    if (feedData.data.length == 0) {
+    if (feedData?.data?.length == 0) {
         return (
             <Container>
                 <ProfileContainer>

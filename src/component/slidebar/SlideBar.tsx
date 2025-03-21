@@ -21,7 +21,7 @@ const SideSlideBar = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const router = useRouter()
   const { darkMode } = useContext(ThemeContext)
-  const { userData } = useUser()
+  const { userData, setUserData} = useUser()
 
   const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
     if (
@@ -35,7 +35,8 @@ const SideSlideBar = () => {
 
   const handleLogout = () => {
     logout().then(() => {
-      localStorage.setItem('token', "");
+      setUserData({})
+      localStorage.removeItem('token');
       router.push('/')
       toast.success("Logout successfull")
     }).catch((err) => {
