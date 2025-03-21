@@ -60,7 +60,7 @@ const IncomingRequests = () => {
                   >
                     <RequestContainer>
                       <ListItemAvatar>
-                        <Avatar src={request.fromUserId.profile} alt={request.fromUserId.firstName} />
+                        <Avatar src={request.fromUserId.profile} alt={request.fromUserId.firstName} sx={{fontSize:"15px",fontWeight:500}}/>
                       </ListItemAvatar>
                       <RequestText primary={request.fromUserId.firstName + ' ' + request.fromUserId.lastName} />
                     </RequestContainer>
@@ -86,7 +86,7 @@ const IncomingRequests = () => {
               </Grid2>
             )) : (
               <Grid2 size={{ xs: 12 }}>
-                <Error>No User Found</Error>
+                <Error>No requests found!🚫 Seems like it's a little quiet here. Keep exploring to get noticed!</Error>
               </Grid2>
             )}
           </Grid2>

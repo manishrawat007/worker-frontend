@@ -1,6 +1,6 @@
 import { Box, Card, IconButton, styled, Typography } from "@mui/material";
 
-export const Container = styled(Box)(({ theme }) => ({
+export const Container = styled(Box)(() => ({
     display: "flex",
     flexDirection: "row",
     height: "100vh",
@@ -10,13 +10,14 @@ export const Container = styled(Box)(({ theme }) => ({
 
 export const InnerContainer = styled(Box)(({ theme }) => ({
     border: "1px solid #ccc",
-    width: "400px",
+    minWidth: "320px",
     height: "90%",
     borderRadius: "10px",
-    margin: "30px",
+    marginTop: "30px",
     display: "flex",
     justifyContent: "flex-start",
     flexDirection: "column",
+    margin:"60px 0px",
     gap: "0px",
     background: theme.palette.background.paper,
     boxShadow: "1px 1px 5px #CCC",

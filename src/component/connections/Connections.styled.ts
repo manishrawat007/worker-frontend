@@ -36,7 +36,7 @@ export const CustomMainCard = styled(Card)(() => ({
     alignItems:"center",
     padding:"0px 10px",
     borderRadius: "5px",
-    cursor:"pointer"
+    cursor:"pointer",
 }))
 
 export const CustomCard = styled(Box)(() => ({
@@ -51,7 +51,7 @@ export const CustomText = styled(Typography)(({theme}) => ({
 
 export const Error = styled(Box)(({ theme }) => ({
     textAlign: "center",
-    fontSize: 3 * theme.typography.fontSize,
+    fontSize: 4 * theme.typography.fontSize,
     fontWeight: 500,
     color: "red",
 }))

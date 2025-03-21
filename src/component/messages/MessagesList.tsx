@@ -33,6 +33,9 @@ const MessageList = () => {
                         fullWidth
                         onChange={()=>{}}
                         margin="normal"
+                        sx={{
+                            marginBottom:"20px"
+                        }}
                     />
                     <Grid2 container spacing={2}>
                         {users.length > 0 ? users?.map((user) => (
@@ -43,7 +46,7 @@ const MessageList = () => {
                                 <CustomMainCard>
                                     <CustomCard>
                                         <CardMedia>
-                                            <Avatar alt={`${user.firstName} ${user.lastName}`} src={user.profile} sx={{ width: 40, height: 40 }} />
+                                            <Avatar alt={`${user.firstName} ${user.lastName}`} src={user.profile} sx={{ width: 40, height: 40,fontSize:"16px" , fontWeight:500 }} />
                                         </CardMedia>
                                         <CardContent>
                                             <CustomText>

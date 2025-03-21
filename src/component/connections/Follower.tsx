@@ -48,7 +48,7 @@ const UserList = () => {
                             <CustomMainCard>
                                 <CustomCard>
                                     <CardMedia>
-                                        <Avatar alt={`${user.firstName} ${user.lastName}`} src={user.profile} sx={{ width: 40, height: 40 }} />
+                                        <Avatar alt={`${user.firstName} ${user.lastName}`} src={user.profile} sx={{ width: 40, height: 40, fontSize:"16px" , fontWeight:500 }} />
                                     </CardMedia>
                                     <CardContent>
                                         <CustomText>
@@ -70,7 +70,7 @@ const UserList = () => {
                         </Grid>
                     )) : (
                         <Grid size={{ xs: 12 }}>
-                            <Error>No User Found</Error>
+                            <Error>No connections yet!💔 Start swiping to find your match and make meaningful connections!</Error>
                         </Grid>
                     )}
                 </Grid>

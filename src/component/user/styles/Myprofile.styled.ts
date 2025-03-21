@@ -12,7 +12,7 @@ export const MainContainer = styled(Box)(() => ({
   },
 }))
 
-export const CoverContainer = styled(Box)<{ bgImage?: string }>(({bgImage}) => ({
+export const CoverContainer = styled(Box)<{ bgImage?: string }>(({ bgImage }) => ({
   position: 'relative',
   width: '100%',
   height: '300px',
@@ -24,15 +24,15 @@ export const CoverContainer = styled(Box)<{ bgImage?: string }>(({bgImage}) => (
 export const MoreIconContainer = styled(Box)(({ theme }) => ({
   position: "absolute",
   zIndex: 2,
-  right:"20px",
-  bottom:"20px",
-  backgroundColor:theme.palette.background.paper,
-  height:"40px",
-  width:"40px",
-  borderRadius:"50%",
-  display:"flex",
-  justifyContent:"center",
-  alignItems:"center"
+  right: "20px",
+  bottom: "20px",
+  backgroundColor: theme.palette.background.paper,
+  height: "40px",
+  width: "40px",
+  borderRadius: "50%",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center"
 }));
 
 export const InsideCover = styled(Box)(({ theme }) => ({
@@ -75,35 +75,43 @@ export const Profile = styled(Avatar)(({ theme }) => ({
   height: 150,
   border: `4px solid #fff`,
   boxShadow: "1px 1px 10px rgba(0, 0, 0, 0.2)",
+  fontSize: 8 * theme.typography.fontSize,
+  fontWeight: 700
 }));
 
 export const EditIconContainer = styled(Avatar)(({ theme }) => ({
   position: "absolute",
   height: "40px",
   width: "40px",
-  backgroundColor:theme.palette.background.paper,
+  backgroundColor: theme.palette.background.paper,
   borderRadius: "50%",
   left: "110px",
-  top:"82px",
+  top: "82px",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
 
   [theme.breakpoints.down("sm")]: {
     left: "59%",
-    top:"60px"
+    top: "60px"
   },
 }));
 
 export const EditIcons = styled(EditIcon)(({ theme }) => ({
-  height:"30px",
-  width:"30px",
-  color:theme.palette.text.primary
+  height: "30px",
+  width: "30px",
+  color: theme.palette.text.primary
+}));
+
+export const Span = styled("span")(() => ({
+  display: 'flex',
+  alignItems: 'center',
+  gap: '8px'
 }));
 
 export const Text = styled(Typography)(({ theme }) => ({
   margin: "0px 10px",
-  color:"#fff",
+  color: "#fff",
   [theme.breakpoints.down("sm")]: {
     margin: "10px 0px",
   },
@@ -134,7 +142,7 @@ export const Tabs = styled(TabList)(({ theme }) => ({
   [theme.breakpoints.down("sm")]: {
     "& .MuiTabs-flexContainer": {
       justifyContent: "space-around",
-      gap:"0px"
+      gap: "0px"
     }
   }
 }));

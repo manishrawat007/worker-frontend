@@ -10,13 +10,18 @@ import ThemeToggle from "./ThemeToggle";
 import DetailsIcon from '@mui/icons-material/Details';
 import { ThemeContext } from "@/styles/ThemeProvider";
 import MessageIcon from '@mui/icons-material/Message';
-import { CustomList, CustomListItem, CustomListItemText, Icons, MenuBar } from "./SlideBar.styled";
+import { CoverContainer, CustomList, CustomListItem, CustomListItemText, Icons, MenuBar, Profile, ProfileContainer } from "./SlideBar.styled";
 import { toast } from "react-toastify";
+import { Text } from "../user/styles/Myprofile.styled";
+import { useUser } from "../user/context/UserContext";
+import SensorOccupiedIcon from '@mui/icons-material/SensorOccupied';
+import MoveToInboxIcon from '@mui/icons-material/MoveToInbox';
 
 const SideSlideBar = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const router = useRouter()
   const { darkMode } = useContext(ThemeContext)
+  const { userData } = useUser()
 
   const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
     if (
@@ -29,7 +34,7 @@ const SideSlideBar = () => {
   };
 
   const handleLogout = () => {
-    logout().then((res) => {
+    logout().then(() => {
       localStorage.setItem('token', "");
       router.push('/')
       toast.success("Logout successfull")
@@ -53,6 +58,15 @@ const SideSlideBar = () => {
           onClick={toggleDrawer(false)}
           onKeyDown={toggleDrawer(false)}
         >
+          <CoverContainer>
+            <ProfileContainer>
+              <Profile
+                src={userData.profile}
+                alt={userData.firstName}
+              />
+              <Text variant="h6">{userData?.firstName} {userData?.lastName ? userData.lastName : ''}</Text>
+            </ProfileContainer>
+          </CoverContainer>
           <List style={{ cursor: "pointer" }}>
             <CustomList onClick={() => router.push('/feeds')}>
               <CustomListItem dark={darkMode}>
@@ -68,13 +82,13 @@ const SideSlideBar = () => {
             </CustomList>
             <CustomList onClick={() => { router.push('/connections') }}>
               <CustomListItem dark={darkMode}>
-                <MessageIcon />
+                <SensorOccupiedIcon />
               </CustomListItem>
               <CustomListItemText primary="Connections" />
             </CustomList>
             <CustomList onClick={() => { router.push('/requests') }}>
               <CustomListItem dark={darkMode}>
-                <MessageIcon />
+                <MoveToInboxIcon />
               </CustomListItem>
               <CustomListItemText primary="Requests" />
             </CustomList>
@@ -82,7 +96,7 @@ const SideSlideBar = () => {
               <CustomListItem dark={darkMode}>
                 <DetailsIcon />
               </CustomListItem>
-              <CustomListItemText primary="Details" />
+              <CustomListItemText primary="My Profile" />
             </CustomList>
             <CustomList>
               <CustomListItem dark={darkMode}>

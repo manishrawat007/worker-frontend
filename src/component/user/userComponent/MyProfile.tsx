@@ -5,11 +5,14 @@ import TabPanel from '@mui/lab/TabPanel';
 import Loader from '@/custom/loader/Loader';
 import AboutUser from './About';
 import { useUser } from '../context/UserContext';
-import { CoverContainer, InsideCover, MainContainer, Profile, ProfileContainer, TabButton, TabListContainer, TabpanelContainer, Tabs, Text } from '../styles/Myprofile.styled';
+import FilterIcon from '@mui/icons-material/Filter';
+import InfoIcon from '@mui/icons-material/Info';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import { CoverContainer, InsideCover, MainContainer, Profile, ProfileContainer, Span, TabButton, TabListContainer, TabpanelContainer, Tabs, Text } from '../styles/Myprofile.styled';
 const EditProfile = lazy(() => import('./EditProfile'))
 const UploadPosts = lazy(() => import('./UploadPosts'))
 
-export const MyProfile: FC<{ user: any }> = ({ user }) => {
+export const MyProfile = () => {
     const [value, setValue] = useState('1');
     const { userData } = useUser()
 
@@ -34,9 +37,18 @@ export const MyProfile: FC<{ user: any }> = ({ user }) => {
                 <TabContext value={value} >
                     <TabListContainer>
                         <Tabs onChange={handleChange} aria-label="lab API tabs example" >
-                            <TabButton label="About" value="1" />
-                            <TabButton label="Edit" value="2" />
-                            <TabButton label="Upload Posts" value="3" />
+                            <TabButton label={<Span>
+                                <InfoIcon sx={{ height: "15px", width: "15px" }} />
+                                About
+                            </Span>} value="1" />
+                            <TabButton label={<Span>
+                                <AssignmentIcon sx={{ height: "15px", width: "15px" }} />
+                                Edit Details
+                            </Span>} value="2" />
+                            <TabButton label={<Span>
+                                <FilterIcon sx={{ height: "15px", width: "15px" }} />
+                                Upload Images
+                            </Span>} value="3" />
                         </Tabs>
                     </TabListContainer>
                     <Suspense fallback={<Loader />}>
