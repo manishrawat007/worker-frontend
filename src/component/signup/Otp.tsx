@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { Box, TextField, Button, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { Inputfield, StyledButton } from "../login/Login.styled";
 import { verifyOtp } from "@/service/apiUrls";
 import { useRouter } from "next/router";
@@ -36,40 +36,38 @@ const OtpScreen: React.FC<{ email: string }> = ({ email }) => {
             email: email
         }
         verifyOtp(payload).then(() => {
-            toast.success("Otp verify successfully")
+            toast.success("Otp verified successfully")
             router.push('/')
         }).catch(() => {
-            toast.success("Otp is not verified")
+            toast.error("Invalid or Incorrect Otp")
         })
 
     };
 
     return (
-        <Box>
-            <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" gap={2}>
-                <Typography variant="h5">Enter OTP send on your register email.</Typography>
-                <Box>
-                    {otp.map((digit, index) => (
-                        <Inputfield
-                            key={index}
-                            value={digit}
-                            onChange={(e) => handleChange(index, e.target.value)}
-                            onKeyDown={(e) => handleKeyDown(index, e)}
-                            inputRef={(el) => (inputRefs.current[index] = el)}
-                            variant="outlined"
-                            size="small"
-                            sx={{marginRight:"10px", marginTop:"5px"}}
-                            inputProps={{
-                                maxLength: 1,
-                                style: { textAlign: "center", width: "40px" },
-                            }}
-                        />
-                    ))}
-                </Box>
-                <StyledButton color="primary" onClick={handleSubmit}>
-                    Verify OTP
-                </StyledButton>
+        <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" gap={2}>
+            <Typography variant="h5">Enter OTP send on your register email.</Typography>
+            <Box>
+                {otp?.map((digit, index) => (
+                    <Inputfield
+                        key={index}
+                        value={digit}
+                        onChange={(e) => handleChange(index, e.target.value)}
+                        onKeyDown={(e) => handleKeyDown(index, e)}
+                        inputRef={(el) => (inputRefs.current[index] = el)}
+                        variant="outlined"
+                        size="small"
+                        sx={{ marginRight: "10px", marginTop: "5px" }}
+                        inputProps={{
+                            maxLength: 1,
+                            style: { textAlign: "center", width: "40px" },
+                        }}
+                    />
+                ))}
             </Box>
+            <StyledButton color="primary" onClick={handleSubmit}>
+                Verify OTP
+            </StyledButton>
         </Box>
     );
 };

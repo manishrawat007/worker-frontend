@@ -14,8 +14,9 @@ import { useRouter } from "next/router";
 const SignUpComponent = () => {
     const [isOtp, setIsOtp] = useState<boolean>(false)
     const [email, setEmail] = useState("")
-    const [imageUrl, setImageUrl] = useState("")
-    const [imageUrl1, setImageUrl1] = useState("")
+    const [imageUrl, setImageUrl] = useState<File | null>(null)
+    const [imageUrl1, setImageUrl1] = useState<File | null>(null)
+    const [isLoading, setIsLoading] = useState(false)
     const router = useRouter()
 
     const defaultValues = {
@@ -38,6 +39,7 @@ const SignUpComponent = () => {
     } = useForm({ defaultValues });
 
     const onSubmit = (formData: any) => {
+        setIsLoading(true)
         const formdata = new FormData()
         formdata.append("firstName", formData.firstName)
         formdata.append("lastName", formData.lastName)
@@ -47,14 +49,20 @@ const SignUpComponent = () => {
         formdata.append("gender", formData.gender)
         formdata.append("skills", formData.skills.split(', '))
         formdata.append("bio", formData.bio)
-        formdata.append("profilePic", formData.profilePic?.[0])
-        formdata.append("coverPic", formData.coverPic?.[0])
+        if (imageUrl) {
+            formdata.append("profilePic", imageUrl)
+        }
+        if (imageUrl1) {
+            formdata.append("coverPic", imageUrl1)
+        }
         signUp(formdata).then(() => {
             setEmail(formData.email)
             toast.success(`Otp is sent on your ${formData.email}`)
             setIsOtp(true)
         }).catch((err) => {
-            toast.error(err.response.data)
+            toast.error(err.response.data.message)
+        }).finally(() => {
+            setIsLoading(false)
         })
     };
 
@@ -147,9 +155,9 @@ const SignUpComponent = () => {
                                             error={!!errors.gender}
                                             helperText={errors.gender?.message}
                                         >
-                                            <MenuItem value="male">Male</MenuItem>
-                                            <MenuItem value="female">Female</MenuItem>
-                                            <MenuItem value="other">Other</MenuItem>
+                                            <MenuItem value="male" sx={{ fontSize: "16px" }}>Male</MenuItem>
+                                            <MenuItem value="female" sx={{ fontSize: "16px" }}>Female</MenuItem>
+                                            <MenuItem value="other" sx={{ fontSize: "16px" }}>Other</MenuItem>
                                         </Inputfield>
                                     )}
                                 />
@@ -188,7 +196,7 @@ const SignUpComponent = () => {
                                             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                                                 const file = event.target.files?.[0];
                                                 if (file) {
-                                                    setImageUrl(URL.createObjectURL(file));
+                                                    setImageUrl(file);
                                                 }
                                             }}
                                             error={!!errors.profilePic}
@@ -207,8 +215,8 @@ const SignUpComponent = () => {
                                     </Box>
                                     :
                                     <PreviewContainer>
-                                        <PreviewImage src={imageUrl} alt="Uploaded Image" />
-                                        <CloseContainer onClick={() => setImageUrl('')}>
+                                        <PreviewImage src={URL.createObjectURL(imageUrl)} alt="Uploaded Image" />
+                                        <CloseContainer onClick={() => setImageUrl(null)}>
                                             <Close />
                                         </CloseContainer>
                                     </PreviewContainer>
@@ -226,7 +234,7 @@ const SignUpComponent = () => {
                                             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                                                 const file = event.target.files?.[0];
                                                 if (file) {
-                                                    setImageUrl1(URL.createObjectURL(file));
+                                                    setImageUrl1(file);
                                                 }
                                             }}
                                             error={!!errors.coverPic}
@@ -245,8 +253,8 @@ const SignUpComponent = () => {
                                     </Box>
                                     :
                                     <PreviewContainer>
-                                        <PreviewImage src={imageUrl1} alt="Uploaded Image" />
-                                        <CloseContainer onClick={() => setImageUrl1('')}>
+                                        <PreviewImage src={URL.createObjectURL(imageUrl1)} alt="Uploaded Image" />
+                                        <CloseContainer onClick={() => setImageUrl1(null)}>
                                             <Close />
                                         </CloseContainer>
                                     </PreviewContainer>
@@ -259,11 +267,12 @@ const SignUpComponent = () => {
                             variant="contained"
                             color="primary"
                             fullWidth
+                            disabled={isLoading}
                         >
                             Register Your Details
                         </StyledButton>
                     </form>
-                        <Account onClick={() => router.push('/')}>Already have an account?<SignupButton> Log in.</SignupButton></Account>
+                    <Account onClick={() => router.push('/')}>Already have an account?<SignupButton> Log in.</SignupButton></Account>
                 </Box> :
                 <OtpScreen email={email} />}
         </FormContainer>
