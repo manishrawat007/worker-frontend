@@ -26,7 +26,7 @@ export const CustomList = styled(ListItem)(() => ({
 export const CustomListItem = styled(ListItemIcon)<{ dark: boolean }>(({ theme, dark }) => ({
     minWidth: "30px",
     "& svg": {
-        fontSize: 6 * theme.typography.fontSize,
+        fontSize: 5 * theme.typography.fontSize,
         fontWeight: 1000,
         color: dark ? "white" : "black"
     }
@@ -35,7 +35,7 @@ export const CustomListItem = styled(ListItemIcon)<{ dark: boolean }>(({ theme, 
 export const CustomListItemText = styled(ListItemText)(({ theme }) => ({
     color: theme.palette.text.primary,
     "& .MuiTypography-root": {
-        fontSize: 5 * theme.typography.fontSize,
+        fontSize: 4 * theme.typography.fontSize,
         fontWeight: 700,
     }
 }))

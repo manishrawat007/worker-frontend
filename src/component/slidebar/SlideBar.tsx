@@ -39,7 +39,7 @@ const SideSlideBar = () => {
       localStorage.removeItem('token');
       router.push('/')
       toast.success("Logout successfull")
-    }).catch((err) => {
+    }).catch(() => {
       toast.error("Logout unsuccessfull")
     })
   }
@@ -98,6 +98,12 @@ const SideSlideBar = () => {
                 <DetailsIcon />
               </CustomListItem>
               <CustomListItemText primary="My Profile" />
+            </CustomList>
+            <CustomList onClick={() => { router.push('/settings') }}>
+              <CustomListItem dark={darkMode}>
+                <DetailsIcon />
+              </CustomListItem>
+              <CustomListItemText primary="Settings" />
             </CustomList>
             <CustomList>
               <CustomListItem dark={darkMode}>

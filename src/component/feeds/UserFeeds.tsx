@@ -34,7 +34,6 @@ type UserProfile = {
 
 export const UserFeeds = () => {
     const [page, setPage] = useState<number>(1);
-    const lastCardRef = useRef<HTMLDivElement | null>(null);
     const { data: feedData, loading, setData: setFeedData, reFetch } = useFetch({
         request: feeds,
         params: page,
@@ -61,24 +60,6 @@ export const UserFeeds = () => {
             setSwipeDirection(undefined);
         }, 500);
     };
-
-
-    useEffect(() => {
-        if (!lastCardRef.current) return;
-
-        const observer = new IntersectionObserver(
-            (entries) => {
-                if (entries[0].isIntersecting) {
-                    reFetch();
-                }
-            },
-            { threshold: 1 }
-        );
-
-        observer.observe(lastCardRef.current);
-
-        return () => observer.disconnect();
-    }, [lastCardRef.current]);
 
     if (loading) {
         return <Loader />;
@@ -118,7 +99,7 @@ export const UserFeeds = () => {
                     mountOnEnter
                     unmountOnExit
                 >
-                    <ProfileContainer ref={index === 0 ? lastCardRef : null}>
+                    <ProfileContainer>
                         <ProfileCard>
                             <CustomCard bgImage={feed.cover} />
                             <MediaContainer>

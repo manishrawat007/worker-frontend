@@ -2,8 +2,8 @@ import { FormData } from '@/component/login/Login';
 import axios from 'axios';
 
 export const api = axios.create({
-  // baseURL: 'http://localhost:7777',
-  baseURL: 'https://worker-lytn.onrender.com',
+  baseURL: 'http://localhost:7777',
+  // baseURL: 'https://worker-lytn.onrender.com',
 });
 
 api.interceptors.request.use(
@@ -88,5 +88,17 @@ export const userMessagesList = () => {
 
 export const updateProfileAndCoverPic = (payload: any) => {
   return api.patch(`/profile/update/cover`, payload)
+}
+
+export const getArchievePosts = () => {
+  return api.get('/posts/archieve')
+}
+
+export const isPostArchive = (id: string,payload:any) => {
+  return api.patch(`/posts/is/archieve/${id}`,payload)
+}
+
+export const deletePost = (id: string) => {
+  return api.delete(`/post/delete/${id}`)
 }
 
