@@ -5,14 +5,13 @@ import { verifyOtp } from "@/service/apiUrls";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 
-const OtpScreen: React.FC<{ email: string }> = ({ email }) => {
+const OtpScreen: React.FC<{ email: string, setIsOtpVerified?: any, forgetScreen?: boolean }> = ({ email, setIsOtpVerified, forgetScreen = false }) => {
     const [otp, setOtp] = useState(["", "", "", "", "", ""]);
     const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
     const router = useRouter()
 
     const handleChange = (index: number, value: string) => {
         if (!/^\d*$/.test(value)) return;
-
         const newOtp = [...otp];
         newOtp[index] = value;
         setOtp(newOtp);
@@ -33,11 +32,16 @@ const OtpScreen: React.FC<{ email: string }> = ({ email }) => {
         const otpValue = otp.join("");
         const payload = {
             otp: otpValue,
-            email: email
+            email: email,
+            forget:forgetScreen ? true :false
         }
         verifyOtp(payload).then(() => {
             toast.success("Otp verified successfully")
-            router.push('/')
+            if (forgetScreen) {
+                setIsOtpVerified(true)
+            } else {
+                router.push('/')
+            }
         }).catch(() => {
             toast.error("Invalid or Incorrect Otp")
         })
