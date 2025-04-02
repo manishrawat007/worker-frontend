@@ -3,7 +3,7 @@ import useFetch from "@/custom/api/Fetch"
 import { getUsersDetails } from "@/service/apiUrls"
 import { Post } from "@/pages/user/[id]"
 import React from "react";
-import { Grid2, Stack } from "@mui/material";
+import { Box, Grid2, Stack, Typography } from "@mui/material";
 import { useUser } from "../context/UserContext"
 import { PostList } from "./UsersProfiles";
 import { CustomChip, Heading, HighlightText, ProfileCard, SkillsContainer, Text, UserDetailsBox } from "../styles/About.styled";
@@ -36,30 +36,26 @@ const AboutUser = () => {
                 <Heading variant="h5">Personal Information</Heading>
                 <ProfileCard>
                     <Grid2 container spacing={4}>
-                        <Grid2 size={{ xs: 12, md: 9, sm: 6 }}>
+                        <Grid2 size={{ xs: 12, sm: 12, md: 12, }}>
                             <Stack spacing={1} >
-                                <Text><b>Birthday:</b> 23/07/2001</Text>
+                                <Text><b>Email :</b>{userData.email}</Text>
                                 <Text><b>Age:</b> {userData.age}</Text>
                                 <Text><b>Gender:</b>{userData.gender.charAt(0).toUpperCase() + userData.gender.slice(1)}</Text>
-                                <Text><b>Address:</b> Manpur,Palwal</Text>
-                            </Stack>
-                        </Grid2>
-                        <Grid2 size={{ xs: 12, md: 3, sm: 6 }} >
-                            <Stack spacing={1}>
-                                <Text><b>Email:</b>{userData.email}</Text>
-                                <Text><b>Phone:</b>**********</Text>
-                                <Text><b>Freelance:</b> {true ? "Available" : "Not Available"}</Text>
                             </Stack>
                         </Grid2>
                     </Grid2>
-                    <SkillsContainer direction="row" spacing={2} mt={3} mb={3}>
-                        {userData?.skills.map((skill: String, index: number) => (
-                            <CustomChip key={index} label={skill} />
-                        ))}
-                    </SkillsContainer>
-                    <HighlightText variant="h6">{userData.bio}</HighlightText>
+                    <Box sx={{padding:0 }}>
+                        <Typography variant="h6">Skills</Typography>
+                        <SkillsContainer direction="row" spacing={2} mt={3} mb={3}>
+                            {userData?.skills.map((skill: String, index: number) => (
+                                <CustomChip key={index} label={skill} />
+                            ))}
+                        </SkillsContainer>
+                    </Box>
+                    <Typography variant="h6">Bio</Typography>
+                    <HighlightText variant="body2">{userData.bio}</HighlightText>
                 </ProfileCard>
-                <PostList posts={userPosts} />
+                <PostList posts={userPosts}/>
 
             </UserDetailsBox>
 

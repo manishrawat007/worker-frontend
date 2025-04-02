@@ -9,11 +9,11 @@ export const MainContainer = styled(Box)(({ theme }) => ({
 export const InnerContainer = styled(Box)<{ bgImage: string }>(({ bgImage }) => ({
     width: '100%',
     height: '150px',
-    backgroundImage: `url(${bgImage}) || ''`,
+    backgroundImage: `url(${bgImage})`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     borderRadius: '8px 8px 0 0',
-    background: "linear-gradient(180deg, #95b79c 0%, #70d2d0 100%)"
+    background: "linear-gradient(90deg, rgb(130, 106, 146) 0%, rgba(238,119,119,1) 50%, rgba(252,176,69,1) 100%)",
 }))
 
 export const ProfileContainer = styled(Box)(() => ({
@@ -28,7 +28,9 @@ export const CustomAvatar = styled(Avatar)(() => ({
     width: "150px",
     height: "150px",
     border: '4px solid white',
-    boxShadow: "2px 4px 10px gray"
+    boxShadow: "2px 4px 10px gray",
+    fontSize:"40px",
+    fontWeight:700
 }))
 
 export const ProfileContainers = styled(Box)(() => ({
@@ -77,14 +79,14 @@ export const CardContainer = styled(Box)(({ theme }) => ({
     borderRadius: "10px",
     overflow: 'hidden',
     boxShadow: "1px 5px 10px gray",
-    cursor: 'pointer',
     height: "300px",
 }))
 
 export const ImageContainer = styled(Box)(({ theme }) => ({
     height: '250px',
     objectFit: 'fill',
-    position: "relative"
+    position: "relative",
+    cursor: 'pointer',
 }))
 
 export const Image = styled('img')(({ theme }) => ({
@@ -108,20 +110,24 @@ export const PreviewImageContainer = styled('img')(({ theme }) => ({
 }))
 
 export const Menu = styled(Box)(({ theme }) => ({
-    position:"absolute",
-    top:"40px",
-    right:"10px",
+    position: "absolute",
+    top: "40px",
+    right: "20px",
     width: "100px",
     boxShadow: "1px 2px 10 ps #CCC",
-    padding:"10px",
-    borderRadius:"10px",
-    zIndex:1,
+    padding: "10px",
+    borderRadius: "10px",
+    zIndex: 1,
     backgroundColor: theme.palette.background.paper
 }))
 
-export const MenuItem = styled(Typography)(({ theme }) => ({
-    fontSize:"12px",
-    color:theme.palette.text.primary
+export const MenuItem = styled(Box)(({ theme }) => ({
+    fontSize: "12px",
+    color: theme.palette.text.primary,
+    display: "flex",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    gap:"2px"
 }))
 
 

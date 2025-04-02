@@ -2,8 +2,8 @@ import { FormData } from '@/component/login/Login';
 import axios from 'axios';
 
 export const api = axios.create({
-  // baseURL: 'http://localhost:7777',
-  baseURL: 'https://worker-lytn.onrender.com',
+  baseURL: 'http://localhost:7777',
+  // baseURL: 'https://worker-lytn.onrender.com',
 });
 
 api.interceptors.request.use(
@@ -82,8 +82,8 @@ export const verifyOtp = (payload: any) => {
   return api.post(`/verify-otp`, payload)
 }
 
-export const userMessagesList = () => {
-  return api.get(`/users/message/list`)
+export const userMessagesList = (username:string) => {
+  return api.get(`/users/message/list/${username}`)
 }
 
 export const updateProfileAndCoverPic = (payload: any) => {
@@ -91,7 +91,7 @@ export const updateProfileAndCoverPic = (payload: any) => {
 }
 
 export const getArchievePosts = () => {
-  return api.get('/posts/archieve')
+  return api.get('/archieve/posts')
 }
 
 export const isPostArchive = (id: string,payload:any) => {

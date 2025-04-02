@@ -83,7 +83,7 @@ const Login = () => {
                             helperText={errors.password?.message}
                             margin="normal"
                         />
-                        <ForgotContainer>
+                        <ForgotContainer onClick={()=>router.push('/forgetpassword')}>
                             <Forgot>Forgot Password</Forgot>
                         </ForgotContainer>
 
@@ -95,7 +95,7 @@ const Login = () => {
                         </StyledButton>
                     </InnerComponent>
                     <AccountContainer>
-                        <Account onClick={() => router.push('/signup')}>Love is just a click away!<SignupButton> Sign up now.</SignupButton></Account>
+                        <Account>Love is just a click away!<SignupButton onClick={() => router.push('/signup')}> Sign up now.</SignupButton></Account>
                     </AccountContainer>
                 </Container>
             </Grid2>

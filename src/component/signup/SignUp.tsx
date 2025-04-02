@@ -272,7 +272,7 @@ const SignUpComponent = () => {
                             Register Your Details
                         </StyledButton>
                     </form>
-                    <Account onClick={() => router.push('/')}>Already have an account?<SignupButton> Log in.</SignupButton></Account>
+                    <Account>Already have an account?<SignupButton onClick={() => router.push('/')}> Log in.</SignupButton></Account>
                 </Box> :
                 <OtpScreen email={email} />}
         </FormContainer>

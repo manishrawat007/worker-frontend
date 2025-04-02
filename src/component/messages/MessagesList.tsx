@@ -2,7 +2,7 @@ import { Avatar, CardContent, CardMedia, Grid2 } from "@mui/material"
 import { Container, CustomCard, CustomMainCard, CustomText, Error, Heading, ProfileCard } from "../connections/Connections.styled"
 import { Accept } from "../requests/Request.styled"
 import { useRouter } from "next/router"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { userMessagesList } from "@/service/apiUrls"
 import Loader from "@/custom/loader/Loader"
 import { Inputfield } from "../login/Login.styled"
@@ -10,14 +10,30 @@ import { Inputfield } from "../login/Login.styled"
 const MessageList = () => {
     const router = useRouter()
     const [users, setUsers] = useState<any[] | null>(null)
+    const [search, setSearch] = useState<string>('')
+    const timerId = useRef<NodeJS.Timeout | null>(null)
 
     useEffect(() => {
-        userMessagesList().then((res) => {
+        fetcherUserList('')
+    }, [])
+
+    const fetcherUserList = (query:string) => {
+        userMessagesList(query).then((res) => {
             setUsers(res?.data?.userList)
         }).catch((err) => {
             console.log("err--------", err)
         })
-    }, [])
+    }
+
+    const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearch(e.target.value)
+        if (timerId.current) {
+            clearTimeout(timerId.current)
+        }
+        timerId.current=setTimeout(() => {
+            fetcherUserList(e.target.value)
+        }, 500)
+    }
 
     if (!users) {
         return <Loader />
@@ -31,10 +47,10 @@ const MessageList = () => {
                         label="Start a new Conversation"
                         type="text"
                         fullWidth
-                        onChange={()=>{}}
+                        onChange={handleSearch}
                         margin="normal"
                         sx={{
-                            marginBottom:"20px"
+                            marginBottom: "20px"
                         }}
                     />
                     <Grid2 container spacing={2}>
@@ -46,7 +62,7 @@ const MessageList = () => {
                                 <CustomMainCard>
                                     <CustomCard>
                                         <CardMedia>
-                                            <Avatar alt={`${user.firstName} ${user.lastName}`} src={user.profile} sx={{ width: 40, height: 40,fontSize:"16px" , fontWeight:500 }} />
+                                            <Avatar alt={`${user.firstName} ${user.lastName}`} src={user.profile} sx={{ width: 40, height: 40, fontSize: "16px", fontWeight: 500 }} />
                                         </CardMedia>
                                         <CardContent>
                                             <CustomText>

@@ -45,7 +45,6 @@ export const CoverContainer = styled(Box)(() => ({
     width: '100%',
     height: '200px',
     background: "linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(238,119,119,1) 50%, rgba(252,176,69,1) 100%)",
-    // background: "linear-gradient(90deg, rgba(247,116,32,1) 22%, rgba(144,4,199,1) 89%, rgba(144,4,199,1) 91%)",
     backgroundPosition: 'center',
 }))
 

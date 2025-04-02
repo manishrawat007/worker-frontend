@@ -8,6 +8,10 @@ import { Heading, ProfileCard } from '../styles/About.styled';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { deletePost, isPostArchive } from '@/service/apiUrls';
 import { toast } from 'react-toastify';
+import ArchiveIcon from '@mui/icons-material/Archive';
+import UnarchiveIcon from '@mui/icons-material/Unarchive';
+import DeleteIcon from '@mui/icons-material/Delete';
+import BlockIcon from '@mui/icons-material/Block';
 
 export const ProfileHeader: FC<{ user: any }> = ({ user }) => {
   return (
@@ -35,13 +39,17 @@ export const ProfileHeader: FC<{ user: any }> = ({ user }) => {
             <Typography variant="body2">{user.followers}</Typography>
             <Typography variant="body2">Connections</Typography>
           </InnerPostsContainer>
+          <InnerPostsContainer>
+            <Typography variant="body2"><BlockIcon sx={{height:"16px", width:"16px"}}/></Typography>
+            <Typography variant="body2">Block</Typography>
+          </InnerPostsContainer>
         </PostsContainer>
       </DetailsContainer>
     </MainContainer>
   );
 };
 
-export const PostList: FC<{ posts: any[], isArchieve?: boolean }> = ({ posts: userPosts, isArchieve = false }) => {
+export const PostList: FC<{ posts: any[], isArchieve?: boolean, otherUser?: boolean }> = ({ posts: userPosts, isArchieve = false, otherUser = false }) => {
   const [open, setOpen] = useState(false);
   const [index, setIndex] = useState<string | null>("-1")
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -77,12 +85,12 @@ export const PostList: FC<{ posts: any[], isArchieve?: boolean }> = ({ posts: us
 
   const handlePostArchieve = (id: string) => {
     const payload = {
-      archieve: true
+      archieve: isArchieve ? false : true
     }
     isPostArchive(id, payload).then(() => {
       setIndex('-1')
       setPosts((prev) => prev.filter((post) => post.id != id))
-    }).catch((err) => {
+    }).catch(() => {
       toast.error("Post is not archieve")
     })
   }
@@ -97,7 +105,7 @@ export const PostList: FC<{ posts: any[], isArchieve?: boolean }> = ({ posts: us
   }
 
   return (
-    <Box sx={{ padding: 2 }}>
+    <Box sx={{padding:otherUser?"20px":"0px"}}>
       {!isArchieve &&
         <Heading variant="h5" >Posts</Heading>
       }
@@ -105,20 +113,22 @@ export const PostList: FC<{ posts: any[], isArchieve?: boolean }> = ({ posts: us
         <Grid2 container spacing={2}>
           {posts.length > 0 ? posts.map((post) => (
             <Grid2 size={{ xs: 12, sm: 6, md: 4 }} key={post.id}>
-              <CardContainer
-                onClick={() => handleImageClick(post.image)}
-              >
-                <ImageContainer>
+              <CardContainer>
+                <ImageContainer onClick={() => handleImageClick(post.image)}>
                   <Image
                     src={post.image}
                     alt={post.description}
                   />
-                  <CustomIcon onClick={(e) => { setIndex((prev) => prev == post.id ? "0" : post.id), e.stopPropagation() }}><MoreVertIcon sx={{ height: "20px", width: "20px" }} /></CustomIcon>
-                  {index == post.id &&
-                    <Menu onClick={(e) => e.stopPropagation()} ref={menuRef}>
-                      <MenuItem onClick={() => handlePostArchieve(post.id)}>Archive</MenuItem>
-                      <MenuItem onClick={() => { handleDeletePost(post.id) }}>Delete</MenuItem>
-                    </Menu>
+                  {!otherUser &&
+                    <>
+                      <CustomIcon onClick={(e) => { setIndex((prev) => prev != post.id ? post.id : '-1'), e.stopPropagation() }}><MoreVertIcon sx={{ height: "20px", width: "20px" }} /></CustomIcon>
+                      {index == post.id &&
+                        <Menu onClick={(e) => e.stopPropagation()} ref={menuRef}>
+                          <MenuItem onClick={() => handlePostArchieve(post.id)}>{isArchieve ? <><UnarchiveIcon sx={{ height: "15px", width: "15px" }} /> UnArchive</> : <><ArchiveIcon sx={{ height: "15px", width: "15px" }} /> "Archive"</>}</MenuItem>
+                          <MenuItem onClick={() => { handleDeletePost(post.id) }}><DeleteIcon sx={{ height: "15px", width: "15px" }} />Delete</MenuItem>
+                        </Menu>
+                      }
+                    </>
                   }
                 </ImageContainer>
                 <Typography variant="body2" sx={{ padding: 1 }}>
