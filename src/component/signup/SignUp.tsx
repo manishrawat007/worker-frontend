@@ -17,6 +17,8 @@ const SignUpComponent = () => {
     const [imageUrl, setImageUrl] = useState<File | null>(null)
     const [imageUrl1, setImageUrl1] = useState<File | null>(null)
     const [isLoading, setIsLoading] = useState(false)
+    const [error, setError] = useState('')
+    const [error1, setError1] = useState('')
     const router = useRouter()
 
     const defaultValues = {
@@ -196,7 +198,14 @@ const SignUpComponent = () => {
                                             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                                                 const file = event.target.files?.[0];
                                                 if (file) {
-                                                    setImageUrl(file);
+                                                    const allowedTypes = ["image/jpeg", "image/png", "image/gif", "image/webp"];
+                                                    if (!allowedTypes.includes(file.type)) {
+                                                        setError("Only images (JPEG, PNG, GIF, WebP) are allowed.");
+                                                        setImageUrl(null)
+                                                        return;
+                                                    } else {
+                                                        setImageUrl(file);
+                                                    }
                                                 }
                                             }}
                                             error={!!errors.profilePic}
@@ -207,9 +216,9 @@ const SignUpComponent = () => {
                                                 Upload Profile picture
                                             </ChooseImage>
                                         </label>
-                                        {errors.profilePic && (
+                                        {(errors.profilePic || error) && (
                                             <Typography sx={{ color: "red", mt: 1, fontSize: "12px", textAlign: "left" }}>
-                                                {errors.profilePic.message}
+                                                {errors?.profilePic?.message || error}
                                             </Typography>
                                         )}
                                     </Box>
@@ -229,12 +238,20 @@ const SignUpComponent = () => {
                                         <Inputfield
                                             type="file"
                                             id="cover-button"
+                                            inputProps={{ accept: "image/*" }}
                                             style={{ display: "none" }}
                                             {...register("coverPic", { required: "Cover picture is required" })}
                                             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                                                 const file = event.target.files?.[0];
                                                 if (file) {
-                                                    setImageUrl1(file);
+                                                    const allowedTypes = ["image/jpeg", "image/png", "image/gif", "image/webp"];
+                                                    if (!allowedTypes.includes(file.type)) {
+                                                        setError1("Only images (JPEG, PNG, GIF, WebP) are allowed.");
+                                                        setImageUrl1(null)
+                                                        return;
+                                                    } else {
+                                                        setImageUrl1(file);
+                                                    }
                                                 }
                                             }}
                                             error={!!errors.coverPic}
@@ -245,9 +262,9 @@ const SignUpComponent = () => {
                                                 Upload Cover picture
                                             </ChooseImage>
                                         </label>
-                                        {errors.coverPic && (
+                                        {(errors.coverPic || error1) && (
                                             <Typography sx={{ color: "red", mt: 1, fontSize: "12px", textAlign: "left" }}>
-                                                {errors.coverPic.message}
+                                                {errors?.coverPic?.message || error1}
                                             </Typography>
                                         )}
                                     </Box>
