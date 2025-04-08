@@ -16,6 +16,7 @@ const UploadPosts = () => {
     const [cover, setCover] = useState<File | null>(null);
     const [coverUrl, setCoverUrl] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(false)
+    const [isloading, setIsLoading] = useState<boolean>(false)
 
     const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
@@ -32,6 +33,7 @@ const UploadPosts = () => {
     }
 
     const handleUpload = async () => {
+        setIsLoading(true)
         let formData = new FormData()
         if (image instanceof File) {
             formData.append("file", image);
@@ -49,6 +51,8 @@ const UploadPosts = () => {
             toast.success(`Post uploaded successfully`)
         } catch {
             toast.error("Posts is not uploaded")
+        } finally {
+            setIsLoading(false)
         }
     };
 
@@ -111,7 +115,7 @@ const UploadPosts = () => {
         } catch (err) {
             toast.error("Profile is not updated")
         } finally {
-            setLoading(true)
+            setLoading(false)
         }
     };
 
@@ -202,7 +206,7 @@ const UploadPosts = () => {
                                 InputLabelProps={{ shrink: true }}
                             />
                             <ResetButton onClick={handleUpload} variant="outlined">
-                                Upload Post
+                                {!isloading ? "Upload a Post" : "Uploading..."}
                             </ResetButton>
                         </ButtonsContainer>
                     </PostContainer>
