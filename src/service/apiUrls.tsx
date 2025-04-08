@@ -2,8 +2,8 @@ import { FormData } from '@/component/login/Login';
 import axios from 'axios';
 
 export const api = axios.create({
-  // baseURL: 'http://localhost:7777',
-  baseURL: 'https://worker-lytn.onrender.com',
+  baseURL: 'http://localhost:7777',
+  // baseURL: 'https://worker-lytn.onrender.com',
 });
 
 api.interceptors.request.use(
@@ -108,5 +108,9 @@ export const forgetPassword = (payload:{email:string}) => {
 
 export const changePassword = (payload:{email:string,password:string}) => {
   return api.post('/change/password',payload)
+}
+
+export const uploadImageCloudinary=(payload:any)=>{
+  return axios.post('https://api.cloudinary.com/v1_1/dybjvwvgx/image/upload',payload)
 }
 

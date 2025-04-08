@@ -3,7 +3,7 @@ import { ButtonsContainer, ChooseImage, Close, CloseContainer, FormContainer, He
 import { Inputfield } from "@/component/login/Login.styled";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { updateProfileAndCoverPic, uploadPost } from "@/service/apiUrls";
+import { updateProfileAndCoverPic, uploadImageCloudinary, uploadPost } from "@/service/apiUrls";
 import { useUser } from "../context/UserContext";
 
 const UploadPosts = () => {
@@ -15,9 +15,9 @@ const UploadPosts = () => {
     const [profileUrl, setProfileUrl] = useState<string | null>(null);
     const [cover, setCover] = useState<File | null>(null);
     const [coverUrl, setCoverUrl] = useState<string | null>(null);
+    const [loading, setLoading] = useState<boolean>(false)
 
     const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        console.log("10000000-------")
         const file = event.target.files?.[0];
         if (file) {
             const profileUrl = URL?.createObjectURL(file)
@@ -31,21 +31,25 @@ const UploadPosts = () => {
         setUploadImageUrl(null)
     }
 
-    const handleUpload = () => {
+    const handleUpload = async () => {
         let formData = new FormData()
         if (image instanceof File) {
-            formData.append("image", image);
+            formData.append("file", image);
+            formData.append('upload_preset', 'tinder')
         }
-        if (typeof message === "string") {
-            formData.append("message", message);
-        }
-        uploadPost(formData).then((res) => {
+        try {
+            const res = await uploadImageCloudinary(formData)
+            let payload = {
+                "message": message,
+                "image": res?.data?.secure_url
+            }
+            await uploadPost(payload)
             setImage(null);
             setUploadImageUrl(null)
             toast.success(`Post uploaded successfully`)
-        }).catch(() => {
-            toast.error(`Post is not uploaded`)
-        })
+        } catch {
+            toast.error("Posts is not uploaded")
+        }
     };
 
 
@@ -74,21 +78,41 @@ const UploadPosts = () => {
         setCoverUrl(null)
     }
 
-    const handleUploadCoverAndProfile = (name: string) => {
+    const handleUploadImage = async (name: string) => {
+        let obj: { [key: string]: string } = {}
         let formData = new FormData()
         if (profile instanceof File) {
-            formData.append(name, profile);
+            formData.append("file", profile);
         }
         if (cover instanceof File) {
-            formData.append(name, cover);
+            formData.append("file", cover);
         }
-        updateProfileAndCoverPic(formData).then((res) => {
-            setUserData((prev: any) => ({ ...prev, profile: res.data.profile, cover: res.data.cover }))
-            toast.success("Profile Updated Successfully")
-            handleResetProfile()
-        }).catch((err) => {
-            toast.success("Profile is not updated", err.message)
-        })
+        formData.append('upload_preset', 'tinder')
+        try {
+            const res = await uploadImageCloudinary(formData)
+            obj[name] = res?.data?.secure_url
+            return obj
+        } catch {
+            toast.error("Profile is not updated")
+        }
+
+    }
+    const handleUploadCoverAndProfile = async (name: string) => {
+        try {
+            setLoading(true)
+            const payload = await handleUploadImage(name)
+            updateProfileAndCoverPic(payload).then((res) => {
+                setUserData((prev: any) => ({ ...prev, profile: res.data.profile, cover: res.data.cover }))
+                toast.success("Profile Updated Successfully")
+                handleResetProfile()
+            }).catch((err) => {
+                toast.error("Profile is not updated", err.message)
+            })
+        } catch (err) {
+            toast.error("Profile is not updated")
+        } finally {
+            setLoading(true)
+        }
     };
 
     return (
@@ -104,7 +128,7 @@ const UploadPosts = () => {
                             </CloseContainer>
                         </PreviewContainer>
                         <ResetButton onClick={() => handleUploadCoverAndProfile("profilePic")} variant="outlined" sx={{ margin: "10px 0px" }}>
-                            Upload Picture
+                            {!loading ? "Upload Picture" : "Uploading..."}
                         </ResetButton>
                     </Box>
                 ) : (
@@ -136,7 +160,7 @@ const UploadPosts = () => {
                             </CloseContainer>
                         </PreviewContainer>
                         <ResetButton onClick={() => handleUploadCoverAndProfile("coverPic")} variant="outlined" sx={{ margin: "10px 0px" }}>
-                            Upload Picture
+                            {!loading ? "Upload Picture" : "Uploading..."}
                         </ResetButton>
                     </Box>
                 ) : (
