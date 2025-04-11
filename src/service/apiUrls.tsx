@@ -2,8 +2,8 @@ import { FormData } from '@/component/login/Login';
 import axios from 'axios';
 
 export const api = axios.create({
-  baseURL: 'http://localhost:7777',
-  // baseURL: 'https://worker-lytn.onrender.com',
+  // baseURL: 'http://localhost:7777',
+  baseURL: 'https://worker-lytn.onrender.com',
 });
 
 api.interceptors.request.use(
