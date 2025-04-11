@@ -5,20 +5,16 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { Grid2 } from "@mui/material";
 import { signUp } from "@/service/apiUrls";
-import { Account, FormContainer, Inputfield, PreviewContainer, SignupButton, StyledButton } from "../login/Login.styled";
-import { ChooseImage, Close, CloseContainer, PreviewImage } from "../user/styles/Edit.styled";
+import { Account, FormContainer, Inputfield, SignupButton, StyledButton } from "../login/Login.styled";
 import OtpScreen from "./Otp";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
+import Loader from "@/custom/loader/Loader";
 
 const SignUpComponent = () => {
     const [isOtp, setIsOtp] = useState<boolean>(false)
     const [email, setEmail] = useState("")
-    const [imageUrl, setImageUrl] = useState<File | null>(null)
-    const [imageUrl1, setImageUrl1] = useState<File | null>(null)
     const [isLoading, setIsLoading] = useState(false)
-    const [error, setError] = useState('')
-    const [error1, setError1] = useState('')
     const router = useRouter()
 
     const defaultValues = {
@@ -30,8 +26,6 @@ const SignUpComponent = () => {
         gender: "",
         skills: "",
         bio: "",
-        profilePic: "",
-        coverPic: ""
     };
 
     const { control,
@@ -42,22 +36,7 @@ const SignUpComponent = () => {
 
     const onSubmit = (formData: any) => {
         setIsLoading(true)
-        const formdata = new FormData()
-        formdata.append("firstName", formData.firstName)
-        formdata.append("lastName", formData.lastName)
-        formdata.append("email", formData.email)
-        formdata.append("password", formData.password)
-        formdata.append("age", formData.age)
-        formdata.append("gender", formData.gender)
-        formdata.append("skills", formData.skills.split(', '))
-        formdata.append("bio", formData.bio)
-        if (imageUrl) {
-            formdata.append("profilePic", imageUrl)
-        }
-        if (imageUrl1) {
-            formdata.append("coverPic", imageUrl1)
-        }
-        signUp(formdata).then(() => {
+        signUp(formData).then(() => {
             setEmail(formData.email)
             toast.success(`Otp is sent on your ${formData.email}`)
             setIsOtp(true)
@@ -67,6 +46,10 @@ const SignUpComponent = () => {
             setIsLoading(false)
         })
     };
+
+    if (isLoading) {
+        return <Loader />
+    }
 
     return (
         <FormContainer>
@@ -185,97 +168,6 @@ const SignUpComponent = () => {
                                     error={!!errors.bio}
                                     helperText={errors.bio?.message}
                                 />
-                            </Grid2>
-
-                            <Grid2 size={{ xs: 12, sm: 6, md: 4, lg: 4 }}>
-                                {!imageUrl ?
-                                    <Box sx={{ textAlign: "center" }}>
-                                        <Inputfield
-                                            type="file"
-                                            id="upload-button"
-                                            style={{ display: "none" }}
-                                            {...register("profilePic", { required: "Profile picture is required" })}
-                                            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                                                const file = event.target.files?.[0];
-                                                if (file) {
-                                                    const allowedTypes = ["image/jpeg", "image/png", "image/gif", "image/webp"];
-                                                    if (!allowedTypes.includes(file.type)) {
-                                                        setError("Only images (JPEG, PNG, GIF, WebP) are allowed.");
-                                                        setImageUrl(null)
-                                                        return;
-                                                    } else {
-                                                        setImageUrl(file);
-                                                    }
-                                                }
-                                            }}
-                                            error={!!errors.profilePic}
-                                            helperText={errors.profilePic?.message}
-                                        />
-                                        <label htmlFor="upload-button">
-                                            <ChooseImage>
-                                                Upload Profile picture
-                                            </ChooseImage>
-                                        </label>
-                                        {(errors.profilePic || error) && (
-                                            <Typography sx={{ color: "red", mt: 1, fontSize: "12px", textAlign: "left" }}>
-                                                {errors?.profilePic?.message || error}
-                                            </Typography>
-                                        )}
-                                    </Box>
-                                    :
-                                    <PreviewContainer>
-                                        <PreviewImage src={URL.createObjectURL(imageUrl)} alt="Uploaded Image" />
-                                        <CloseContainer onClick={() => setImageUrl(null)}>
-                                            <Close />
-                                        </CloseContainer>
-                                    </PreviewContainer>
-                                }
-                            </Grid2>
-
-                            <Grid2 size={{ xs: 12, sm: 6, md: 8, lg: 8 }}>
-                                {!imageUrl1 ?
-                                    <Box sx={{ textAlign: "center" }}>
-                                        <Inputfield
-                                            type="file"
-                                            id="cover-button"
-                                            inputProps={{ accept: "image/*" }}
-                                            style={{ display: "none" }}
-                                            {...register("coverPic", { required: "Cover picture is required" })}
-                                            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                                                const file = event.target.files?.[0];
-                                                if (file) {
-                                                    const allowedTypes = ["image/jpeg", "image/png", "image/gif", "image/webp"];
-                                                    if (!allowedTypes.includes(file.type)) {
-                                                        setError1("Only images (JPEG, PNG, GIF, WebP) are allowed.");
-                                                        setImageUrl1(null)
-                                                        return;
-                                                    } else {
-                                                        setImageUrl1(file);
-                                                    }
-                                                }
-                                            }}
-                                            error={!!errors.coverPic}
-                                            helperText={errors.coverPic?.message}
-                                        />
-                                        <label htmlFor="cover-button">
-                                            <ChooseImage>
-                                                Upload Cover picture
-                                            </ChooseImage>
-                                        </label>
-                                        {(errors.coverPic || error1) && (
-                                            <Typography sx={{ color: "red", mt: 1, fontSize: "12px", textAlign: "left" }}>
-                                                {errors?.coverPic?.message || error1}
-                                            </Typography>
-                                        )}
-                                    </Box>
-                                    :
-                                    <PreviewContainer>
-                                        <PreviewImage src={URL.createObjectURL(imageUrl1)} alt="Uploaded Image" />
-                                        <CloseContainer onClick={() => setImageUrl1(null)}>
-                                            <Close />
-                                        </CloseContainer>
-                                    </PreviewContainer>
-                                }
                             </Grid2>
                         </Grid2>
 
